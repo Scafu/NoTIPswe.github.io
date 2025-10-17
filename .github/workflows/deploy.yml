@@ -24,10 +24,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload site from subfolder
-        uses: actions/upload-pages-artifact@v3
+     -  name: Download website files
+        uses: actions/download-artifact@v4
         with:
-          path: sito
+          name: "sito"
 
       - name: Deploy to GitHub Pages
         id: deployment
