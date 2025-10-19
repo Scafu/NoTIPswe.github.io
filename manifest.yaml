@@ -1,9 +1,1 @@
 documents:
-  - title: Test - Documento di prova
-    group: rtb
-    source: docs/test-doc/test-doc.typ
-    output: test.pdf
-  - title: Analisi dei Requisiti
-    group: rtb
-    source: docs/adr/adr.typ
-    output: adr.pdf
