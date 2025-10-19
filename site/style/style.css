@@ -1,0 +1,387 @@
+:root {
+  --accent: #ff3b7f;
+  --accent2: #7a2d64;
+  --link: #c03e6b;
+  --shadow: rgba(192, 62, 107, 0.05);
+  --bg: #dbdbdb;
+  --bg2: #494949;
+  --bg3: #ff893b;
+  --border: #444;
+  --header: #d3d3d3;
+  --hover-btn-color: rgb(255, 131, 93);
+  --fg: #000000;
+  --text-color: #141414;
+  --card-bg: #ffffff; 
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --accent: #ff6b6b; 
+  --font-family: 'JetBrains Mono', monospace;
+}
+
+
+body {
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+body.about {
+  background-color: var(--bg) !important;
+  transform: translateY(-100%); /* Parte dall’alto */
+  opacity: 0; /* Inizio trasparente */
+  transition: transform 0.8s ease-out, opacity 1s ease-out; /* Durata e fluidità */
+}
+
+body.about.loaded {
+  transform: translateY(0); /* Posizione finale */
+  opacity: 1; /* Diventa visibile */
+}
+
+a, a:visited, a:hover, a:active{
+  color: inherit;
+  text-decoration: none;
+}
+
+
+.button-scelte{
+  --btn-default-bg: rgb(255, 255, 255);
+  --btn-padding: 15px 20px;
+  --btn-hover-bg: rgb(51, 51, 51);
+  --btn-transition: .3s;
+  --btn-letter-spacing: .1rem;
+  --btn-animation-duration: 1.2s;
+  --btn-shadow-color: rgba(0, 0, 0, 0.137);
+  --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
+  --hover-btn-color: rgb(255, 131, 93);
+  --default-btn-color: rgb(41, 41, 41);
+  --font-size: 1.3rem;
+  --font-weight: 600;
+  --font-family: 'JetBrains Mono', monospace;
+}
+
+.button-scelte{
+  
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: var(--btn-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--default-btn-color);
+  font: var(--font-weight) var(--font-family);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  background: var(--btn-default-bg);
+  border: none;
+  cursor: pointer;
+  transition: var(--btn-transition);
+  overflow: hidden;
+  box-shadow: var(--btn-shadow);
+  flex-shrink: 0;
+}
+
+
+.button-scelte span {
+  letter-spacing: var(--btn-letter-spacing);
+  transition: var(--btn-transition);
+  box-sizing: border-box;
+  position: relative;
+  background: inherit;
+}
+
+
+.button-scelte span::before {
+  box-sizing: border-box;
+  position: absolute;
+  content: "";
+  background: inherit;
+}
+
+
+
+.button-scelte:hover, .button-scelte:focus {
+  background: var(--btn-hover-bg);
+}
+
+.button-scelte:hover span, .button-scelte:focus span {
+  color: var(--hover-btn-color);
+}
+
+
+.button-scelte:hover span, .button-scelte:focus span {
+  color: var(--hover-btn-color);
+}
+
+
+
+.container-card {
+  display: flex;
+  justify-content: center;  
+  align-items: center;      
+  gap: 20px;                
+  flex-wrap: wrap;           
+  margin: 50px auto;         
+}
+
+.main-card {
+  flex: 2;                  
+  max-width: 600px;
+  min-height: 200px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-card h2 {
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+.main-card-img {
+  flex: 1;                 
+  max-width: 350px;           
+  min-height: 200px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-card-img img {
+  max-width: 100%;  
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.collaborazione{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 50px auto; /* Aggiunge 50px di margine sopra/sotto e centra orizzontalmente */
+}
+
+.collaborazione h2{
+  font-size: 1.6rem;
+}
+
+.collaborazione-img{   
+  max-width: 500px;     
+  min-height: 200px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  padding: 20px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collaborazione-img img {
+  max-width: 80%;  
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px; /* Manteniamo le proporzioni */
+}
+
+.grid-layout{ display: grid; grid-template-columns: repeat(2, minmax(200px, 1fr)); gap: 50px; padding: 100px; width: 60%; margin: auto; align-items: flex-start;}
+
+
+@media (max-width: 768px) {
+  .grid-layout {
+    margin: auto;
+    grid-template-columns: 1fr;
+    width: 90%; 
+    padding: 20px; 
+    gap: 20px; 
+  }
+}
+
+
+@media (max-width: 480px) {
+  .grid-layout {
+    margin: auto;
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+.dropdown .button-scelte {
+  width: 100%;
+}
+
+
+.dropdown-content {
+  font-family: var(--font-family);
+  max-height: 0;              
+  overflow: hidden;          
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow);
+  transition: max-height 0.3s ease; 
+}
+
+
+.dropdown.active .dropdown-content,
+.dropdown:hover .dropdown-content {
+  max-height: 200px; 
+}
+
+
+.dropdown-content a {
+  color: var(--text-color);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 1.1rem;
+  font-family: 'JetBrains Mono', monospace;
+  transition: background-color 0.2s;
+}
+
+
+.dropdown-content a:hover {
+  background-color: var(--bg2);
+  color: var(--hover-btn-color);
+}
+
+.dropdown:hover .button-scelte {
+  background: var(--btn-hover-bg);
+}
+
+.dropdown:hover .button-scelte span {
+  color: var(--hover-btn-color);
+}
+
+
+
+
+/* Bottone menu */
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+  margin-left: 10px;
+}
+
+.main-card-about{                
+  max-width: 300px; 
+  height: fit-content;
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+}
+.main-card-about .aboutus-title{
+  font-size: 2.5rem;
+}
+.main-card-about-h2 {
+  display: flex; /* permette di adattarsi al contenuto */
+  max-width: 90%;        /* evita che sia troppo largo */
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  margin: 50px auto;     /* centra orizzontalmente */
+  padding: 20px;         /* aggiunge spazio interno */
+  text-align: center;    /* centra il testo */
+}
+
+.main-card-about-h2 h2 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.avatar-container {
+  background-color: var(--card-bg);
+  height: 300px;
+  width: 320px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.7); /* riduce tutto al 70% */
+  transform-origin: top center; /* punto di riduzione */
+}
+
+.avatar-container a {
+  text-decoration: none; /* rimuove sottolineatura link */
+  color: inherit;        /* mantiene il colore del testo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.avatar-img:hover {
+  transform: scale(1.1);
+}
+
+.avatar-container span {
+  background-color: #ff893b;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 30px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  height: 100px;
+  width: 200px;
+  
+}
+
+.grid-github {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* numero di colonne automatico in base allo spazio */
+  gap: 20px; /* spazio tra le card */
+  padding: 20px;
+  width: 90%; /* lascia un po' di margine ai lati */
+  margin: 40px auto;
+  align-items: start;
+  backdrop-filter: blur(6px);
+  justify-items: center; /* centra le card nella cella */
+}
+
+/* Facoltativo: rendi il contenitore responsive su schermi piccoli */
+@media (max-width: 480px) {
+  .grid-github {
+    grid-template-columns: 1fr; /* una sola colonna su smartphone */
+    width: 95%;
+    padding: 10px;
+    gap: 15px;
+  }
+}
+
