@@ -1,1 +1,5 @@
 documents:
+  - title: Documento di prova
+    source: docs/test/test.typ
+    group: rtb
+    output: test.pdf

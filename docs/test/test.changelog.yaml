@@ -1,0 +1,9 @@
+- version: 1
+  date: 2025-10-06
+  authors:
+    - Matteo Mantoan
+    - Another One
+  verifiers:
+    - Another Two
+  description: >
+    This made it and that and that and those and bla bla bla...
