@@ -3,8 +3,13 @@ import subprocess
 import os
 import sys
 import logging
+import json
+from jsonschema import validate, ValidationError
 from dataclasses import dataclass
 from typing import List, Dict, Set, Optional
+
+MANIFEST_SCHEMA_PATH = ".schemas/manifest.schema.json"
+CHANGELOG_SCHEMA_PATH = ".schemas/changelog.schema.json"
 
 
 @dataclass
@@ -63,44 +68,36 @@ class GitFileLoader(FileLoader):
 
 def load_documents_model(manifest_path="manifest.yaml") -> List[Document]:
     """Factory function to build the document model from local files."""
-
     logging.info("Building documents model from local files...")
     local_loader = LocalFileLoader()
-    manifest_content = local_loader.get_content(manifest_path)
-    if not manifest_content:
-        logging.critical(f"Could not load local manifest at '{manifest_path}'.")
-        sys.exit(1)
-
-    return _build_model(yaml.safe_load(manifest_content), local_loader)
+    return _build_model_with_loader(manifest_path, local_loader)
 
 
 def load_model_from_git(
     remote_branch_name: str, manifest_path="manifest.yaml"
 ) -> List[Document]:
     """Factory function to build the document model from a git branch."""
-
     logging.info(f"Building documents model from git branch '{remote_branch_name}'...")
     git_loader = GitFileLoader(remote_branch_name)
-    manifest_content = git_loader.get_content(manifest_path)
+    return _build_model_with_loader(manifest_path, git_loader)
+
+
+def _build_model_with_loader(manifest_path: str, loader: FileLoader) -> List[Document]:
+    """
+    Generic core logic to build the model using a provided loader.
+    """
+    manifest_content = loader.get_content(manifest_path)
     if not manifest_content:
-        logging.critical(
-            f"Could not load manifest from git branch '{remote_branch_name}'."
-        )
+        logging.critical(f"Could not load manifest at '{manifest_path}'.")
         sys.exit(1)
 
-    return _build_model(yaml.safe_load(manifest_content), git_loader)
-
-
-def _build_model(manifest_data: Dict, loader: FileLoader) -> List[Document]:
-    """
-    Generic core logic to build the model from manifest data using a provided loader.
-    """
-
-    if "documents" not in manifest_data:
-        logging.critical("Manifest is missing the required 'documents' key.")
+    manifest_data = _parse_and_validate_yaml(
+        manifest_content, manifest_path, MANIFEST_SCHEMA_PATH, "Manifest"
+    )
+    if not manifest_data:
         sys.exit(1)
 
-    documents_list = manifest_data["documents"]
+    documents_list = manifest_data.get("documents", [])
     if not documents_list:
         logging.warning("Manifest 'documents' list is empty. Nothing to build.")
         return []
@@ -122,37 +119,34 @@ def _process_document_entry(entry: Dict, loader: FileLoader) -> Optional[Documen
     Takes a single manifest entry and transforms it into a Document object,
     validating each step using the provided loader.
     """
-
-    if not _validate_manifest_entry(entry):
-        return None
-
+    # La validazione della struttura dell'entry è già stata fatta dallo schema del manifest
+    title = entry["title"]
     source_path = entry["source"]
     changelog_path = _get_changelog_path(source_path)
 
     changelog_content = loader.get_content(changelog_path)
     if changelog_content is None:
         logging.error(
-            f"Validation failed for '{entry['title']}': Could not load changelog at '{changelog_path}'."
+            f"Validation failed for '{title}': Could not load changelog at '{changelog_path}'."
         )
         return None
 
-    changelog_data = _parse_yaml_content(
-        changelog_content, changelog_path, entry["title"]
+    changelog_data = _parse_and_validate_yaml(
+        changelog_content, changelog_path, CHANGELOG_SCHEMA_PATH, title
     )
-    if not changelog_data or not _validate_changelog_structure(
-        changelog_data, changelog_path, entry["title"]
-    ):
+    if not changelog_data:
         return None
 
+    # Lo schema valida la struttura, ora validiamo la logica di business (la sequenza)
     versions = [c["version"] for c in changelog_data]
-    if not _validate_version_sequence(versions, changelog_path, entry["title"]):
+    if not _validate_version_sequence(versions, changelog_path, title):
         return None
 
     subfiles = _find_associated_typ_files(source_path)
 
     return Document(
-        title=entry["title"],
-        source=entry["source"],
+        title=title,
+        source=source_path,
         output=entry["output"],
         group=entry["group"],
         changelog_path=changelog_path,
@@ -185,8 +179,10 @@ def _find_associated_typ_files(source_path: str) -> Set[str]:
     return subfiles
 
 
-def _parse_yaml_content(content: str, file_path: str, doc_title: str) -> Optional[list]:
-    """Safely parses YAML content from a string."""
+def _parse_and_validate_yaml(
+    content: str, file_path: str, schema_path: str, doc_title: str
+) -> Optional[Dict]:
+    """Safely parses YAML content from a string and validates it against a schema."""
     try:
         data = yaml.safe_load(content)
         if not data:
@@ -194,62 +190,49 @@ def _parse_yaml_content(content: str, file_path: str, doc_title: str) -> Optiona
                 f"Validation failed for '{doc_title}': File '{file_path}' is empty."
             )
             return None
-        return data
     except yaml.YAMLError as e:
         logging.error(
             f"Validation failed for '{doc_title}': Could not parse YAML in '{file_path}': {e}"
         )
         return None
 
+    if not _validate_with_schema(data, schema_path, file_path):
+        return None
 
-def _validate_manifest_entry(entry: Dict) -> bool:
-    """Validates the presence of required keys in a manifest entry."""
-    required_keys = ["title", "source", "output", "group"]
-    for key in required_keys:
-        if not entry.get(key):
-            logging.error(
-                f"Invalid manifest entry: Missing or empty key '{key}'. Entry: {entry}"
-            )
-            return False
-    return True
+    return data
 
 
-def _validate_changelog_structure(data: List, path: str, title: str) -> bool:
-    """Validates the internal structure of a changelog (keys, types)."""
-    if not isinstance(data, list):
+def _validate_with_schema(data: Dict, schema_path: str, file_path: str) -> bool:
+    """Validates data against a JSON Schema file."""
+    try:
+        with open(schema_path, "r", encoding="utf-8") as f:
+            schema = json.load(f)
+        validate(instance=data, schema=schema)
+        logging.debug(
+            f"Schema validation passed for '{file_path}' against '{schema_path}'."
+        )
+        return True
+    except FileNotFoundError:
         logging.error(
-            f"Changelog error for '{title}': File '{path}' must be a YAML list."
+            f"CRITICAL: Schema file not found at '{schema_path}'. Cannot validate."
         )
         return False
-
-    required_keys = ["version", "date", "authors", "verifiers", "description"]
-    for i, entry in enumerate(data, 1):
-        if not isinstance(entry, dict):
-            logging.error(
-                f"Changelog error for '{title}': Entry #{i} in '{path}' is not a dictionary."
-            )
-            return False
-        for key in required_keys:
-            if key not in entry:
-                logging.error(
-                    f"Changelog error for '{title}': Entry #{i} is missing key '{key}'."
-                )
-                return False
-        if not isinstance(entry.get("version"), int):
-            logging.error(
-                f"Changelog error for '{title}': Entry #{i} has a non-integer version."
-            )
-            return False
-    return True
+    except ValidationError as e:
+        error_path = "/".join(map(str, e.path))
+        logging.error(f"Schema validation failed for '{file_path}':")
+        logging.error(f"  - Error: {e.message}")
+        if error_path:
+            logging.error(f"  - At path: /{error_path}")
+        return False
 
 
 def _validate_version_sequence(versions: List[int], path: str, title: str) -> bool:
-    """Validates that a list of versions is sorted and has no gaps."""
+    """Validates that a list of versions is sorted and has no gaps (business logic)."""
     if not versions:
         return True
     if versions != sorted(versions, reverse=True):
         logging.error(
-            f"Changelog error for '{title}': Versions in '{path}' are not sorted descending. Found: {versions}"
+            f"Changelog logic error for '{title}': Versions in '{path}' are not sorted descending. Found: {versions}"
         )
         return False
 
@@ -257,7 +240,7 @@ def _validate_version_sequence(versions: List[int], path: str, title: str) -> bo
     expected = list(range(n, 0, -1))
     if versions != expected:
         logging.error(
-            f"Changelog error for '{title}': Versions in '{path}' have gaps or are not sequential."
+            f"Changelog logic error for '{title}': Versions in '{path}' have gaps or are not sequential."
         )
         logging.error(f"  Expected: {expected}")
         logging.error(f"  Found:    {versions}")

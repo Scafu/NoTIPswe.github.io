@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Changelog Schema",
+    "description": "Defines the structure for *.changelog.yaml files.",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "version": {
+                "type": "integer",
+                "description": "The version number for this entry."
+            },
+            "date": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "description": "The date of the update as string (e.g., \"2025-10-19\").",
+                "minLength": 1
+            },
+            "authors": {
+                "type": "array",
+                "description": "A list of authors for this version.",
+                "items": {
+                    "type": "string"
+                },
+                "minItems": 1
+            },
+            "verifiers": {
+                "type": "array",
+                "description": "A list of verifiers for this version.",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "description": {
+                "type": "string",
+                "description": "A description of the changes made in this version."
+            }
+        },
+        "required": ["version", "date", "authors", "verifiers", "description"]
+    }
+}
