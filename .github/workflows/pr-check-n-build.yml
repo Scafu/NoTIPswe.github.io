@@ -20,7 +20,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml jsonschema
 
       - name: Run PR Semantic Check
         run: python scripts/validate_pr_changes.py
@@ -38,7 +38,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml jsonschema
 
       - name: Install Typst
         uses: typst-community/setup-typst@v3
