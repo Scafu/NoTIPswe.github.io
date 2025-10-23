@@ -12,7 +12,7 @@
                 "properties": {
                     "title": {
                         "type": "string",
-                        "description": "The official title of the document.",
+                        "description": "The official title of the document. This will be directly passed as a parameter to the source. The source is free to use it or not.",
                         "minLength": 1
                     },
                     "source": {

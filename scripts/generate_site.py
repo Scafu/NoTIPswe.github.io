@@ -82,11 +82,11 @@ def main():
         "--site-dir", default="site", help="Source directory of the website."
     )
     parser.add_argument(
-        "--outdir", default="_site", help="Output directory for the final website."
+        "--outdir", default="dist", help="Output directory for the final website."
     )
     parser.add_argument(
         "--docs-folder",
-        default="documents",
+        default="docs",
         help="Subfolder for compiled PDF documents.",
     )
     args = parser.parse_args()

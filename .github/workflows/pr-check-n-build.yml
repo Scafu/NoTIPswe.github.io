@@ -44,10 +44,11 @@ jobs:
         uses: typst-community/setup-typst@v3
 
       - name: Execute Python build script (full validation & compile)
-        run: python scripts/build-docs.py --outdir=docs-output
+        run: python scripts/build_docs.py --outdir=dist/docs
 
       - name: Upload PDF artifacts for the reviewer
         uses: actions/upload-artifact@v4
         with:
           name: pdf-previews
-          path: ./docs-output/
+          path: ./dir/docs-output/
+          retention-days: 7

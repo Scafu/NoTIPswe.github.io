@@ -64,7 +64,7 @@ def main():
     parser = argparse.ArgumentParser(description="Build Typst documents.")
     parser.add_argument(
         "--outdir",
-        default="docs-output",
+        default="dist/docs",
         help="Output directory for compiled documents.",
     )
     args = parser.parse_args()
