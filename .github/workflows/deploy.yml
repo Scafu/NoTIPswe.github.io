@@ -33,10 +33,10 @@ jobs:
         uses: typst-community/setup-typst@v3
 
       - name: Build Typst documents
-        run: python scripts/build-docs.py --outdir _site/documents
+        run: python scripts/build_docs.py --outdir _site/documents
 
       - name: Generate static site
-        run: python scripts/generate-site.py --outdir _site --site-dir site
+        run: python scripts/generate_site.py --outdir _site --site-dir site
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
