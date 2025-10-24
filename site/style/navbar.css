@@ -19,6 +19,7 @@
 
 .menu-toggle {
   display: none;
+  color: white;
 }
 
 @media (max-width: 1100px) {
@@ -51,8 +52,9 @@
     background-color: var(--bg3) !important;
     
 }
-.dollar{
-    color: green;
+
+.navbar #Notip{
+  color: white;
 }
 
 .title-center {
@@ -85,7 +87,7 @@
   --btn-animation-duration: 1.2s;
   --btn-shadow-color: rgba(0, 0, 0, 0.137);
   --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
-  --hover-btn-color: rgb(255, 131, 93);
+  --hover-btn-color: rgb(255,255,255);
   --default-btn-color: rgb(41, 41, 41);
   --font-size: 1.0rem;
   --font-weight: 600;
@@ -259,7 +261,8 @@
 }
 
 .sidebar a:hover {
-  background-color: var(--bg2);
+  background-color: #b51119;
+  color: white;
 }
 
 
@@ -278,3 +281,4 @@
   left: 0;
   right: auto;
 }
+
