@@ -260,8 +260,8 @@ a, a:visited, a:hover, a:active{
 
 
 .dropdown-content a:hover {
-  background-color: var(--bg2);
-  color: var(--hover-btn-color);
+  background-color: #b51119;
+  color: white;
 }
 
 .dropdown:hover .button-scelte {
@@ -271,8 +271,6 @@ a, a:visited, a:hover, a:active{
 .dropdown:hover .button-scelte span {
   color: var(--hover-btn-color);
 }
-
-
 
 
 /* Bottone menu */
