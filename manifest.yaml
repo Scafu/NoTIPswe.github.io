@@ -1,5 +1,9 @@
 documents:
-  - title: Documento di prova
-    source: docs/test/test.typ
+  - title: Esempio verbale
+    source: docs/esempio_verbale/esempio_verbale.typ
     group: rtb
-    output: test.pdf
+    output: esempio_verbale.pdf
+  - title: Esempio ddb
+    source: docs/esempio_ddb/esempio_ddb.typ
+    group: rtb
+    output: esempio_ddb.pdf
