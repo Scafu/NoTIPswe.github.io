@@ -1,0 +1,8 @@
+- version: 1
+  date: "2025-10-25"
+  authors:
+    - Francesco Marcon
+  verifiers: 
+    - ""    # insert all the verifiers once that we have them ...
+  description: >
+    Prima versione del Verbale Esterno post incontro con l'azienda proponente M31.

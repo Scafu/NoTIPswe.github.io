@@ -1,4 +1,4 @@
-#import "../templates/base_verbale.typ" as base-verbale
+#import "../templates/base_report.typ" as base-verbale
 
 #let changelog = yaml(sys.inputs.changelog_path)
 

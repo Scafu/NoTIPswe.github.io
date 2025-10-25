@@ -1,4 +1,5 @@
 documents:
+  # Fake documents
   - title: Esempio verbale
     source: docs/esempio_verbale/esempio_verbale.typ
     group: rtb
@@ -7,3 +8,18 @@ documents:
     source: docs/esempio_ddb/esempio_ddb.typ
     group: rtb
     output: esempio_ddb.pdf
+
+  # Real documents
+
+  #####################################################
+  ############   DOCUMENTS MILESTONE_1  ###############
+  #####################################################
+
+  - title: Verbale M31 24/10
+    source: docs/milestone_1/external_reports/external_report_M31.typ
+    group: cand   # check if correct
+    output: external_report_M31.pdf
+  - title: Verbale Eggon 24/10
+    source: docs/milestone_1/external_reports/external_report_Eggon.typ
+    group: cand   # check if correct
+    output: external_report_Eggon.pdf
