@@ -1,0 +1,8 @@
+- version: 1
+  date: "2025-10-26"
+  authors:
+    - Valerio Solito
+  verifiers:
+    - Matteo Mantoan
+  description: >
+    Prima versione del primo diario di bordo
