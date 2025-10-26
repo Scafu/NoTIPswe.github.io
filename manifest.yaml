@@ -7,3 +7,7 @@ documents:
     source: docs/esempio_ddb/esempio_ddb.typ
     group: rtb
     output: esempio_ddb.pdf
+  - title: Diario di Bordo 2025-10-27
+    source: docs/ddb_2025-10-27/ddb_2025-10-27.typ
+    group: cand
+    output: ddb_2025-10-27.pdf
