@@ -6,6 +6,8 @@ import argparse
 
 import docs_lib
 
+FONT_PATH = "docs/templates/fonts"
+
 
 def setup_logging():
     """Configures logging."""
@@ -38,13 +40,19 @@ def compile_document(doc: docs_lib.Document, output_dir: str):
         f"doc_title={doc.title}",
         "--root",
         ".",
+        "--ignore-system-fonts",
+        f"--font-path={FONT_PATH}"
     ]
     logging.debug(f"Executing: {' '.join(command)}")
 
     try:
-        subprocess.run(
+        proc = subprocess.run(
             command, capture_output=True, text=True, encoding="utf-8", check=True
         )
+
+        if proc.stderr != "":
+            logging.info(f"WARNINGS: {proc.stderr}")
+
         logging.info(f"SUCCESS: '{doc.title}' compiled.")
         return True
     except subprocess.CalledProcessError as e:

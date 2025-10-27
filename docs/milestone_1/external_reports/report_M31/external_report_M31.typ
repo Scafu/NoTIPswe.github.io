@@ -5,7 +5,19 @@
 #base-report.apply-base-verbale(
   date: "2025-10-24", 
   scope: base-report.EXTERNAL_SCOPE, 
+  front-info: (("Presenze", "Francesco Marcon"),
+               ("", "Leonardo Preo"),
+               ("", "Matteo Mantoan"),
+               ("", "Mario de Pasquale"), 
+               ("", "Valerio Solito"),
+               ("", "Alessandro Contarini"),
+               ("Destinazione", "NoTIP"),
+               ("", "Prof. Vardanega Tullio"),
+               ("", "Prof. Cardin Riccardo")
+  ),
+  abstract: "Il seguente documento contiene un resoconto dell'incontro tenutosi con la poponente M31, con obiettivo conoscitivo e di chiarimento circa alcuni dubbi tecnici sorti all'interno del gruppo",
   changelog: changelog,
+
 )[
   Primo incontro tramite *Microsoft Teams* con la proponente #emph([M31]). Lo scopo dell’incontro da noi richiesto è il chiarire i dubbi che sono sorti nel gruppo durante la presentazione del capitolato e nella successiva fase di rilettura ed analisi eseguita.
 
@@ -64,11 +76,11 @@
   == Altro
   #emph([M31]) ha concluso l’incontro congratulandosi con il gruppo per le domande dal carattere generale e conoscitivo, con un livello di dettaglio coerente alla fase attuale.
 
-  = Epilogo della Riunione : 
+  = Epilogo della Riunione
   L’incontro tenutosi con l'azienda proponente #emph([M31]) è risultato complessivamente molto positivo da tutti i presenti. I rappresentanti dell’azienda si sono dimostrati molto disponibili e hanno saputo chiarire tutti i dubbi che avevamo, in modo preciso e puntuale.
   NoTIP ringrazia, nuovamente, #emph([M31]) per la serietà e disponibilità dimostrata durante l’incontro. 
 
-  = Approvazione aziendale: 
+  = Approvazione aziendale
   La presente sezione certifica che il verbale è stato esaminato e approvato dai rappresentanti di #emph([M31]).
   L’avvenuta approvazione è formalmente confermata dalle firme riportate di seguito dei referenti aziendali.
 

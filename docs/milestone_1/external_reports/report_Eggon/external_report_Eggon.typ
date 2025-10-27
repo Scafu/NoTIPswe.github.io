@@ -5,11 +5,18 @@
 #base-report.apply-base-verbale(
   date: "2025-10-25",
   scope: base-report.EXTERNAL_SCOPE,
+  front-info: (("Presenze", "Francesco Marcon"),
+               ("", "Leonardo Preo"),
+               ("", "Matteo Mantoan"),
+               ("", "Mario de Pasquale"), 
+               ("", "Valerio Solito"),
+               ("", "Alessandro Contarini"),
+               ("Destinazione", "NoTIP"),
+               ("", "Prof. Vardanega Tullio"),
+               ("", "Prof. Cardin Riccardo")
+  ),
+  abstract: "Il seguente documento contiene un resoconto dell'incontro tenutosi con la poponente Eggon, con obiettivo conoscitivo e di chiarimento circa alcuni dubbi tecnici sorti all'interno del gruppo",
   changelog: changelog,
-  front-info: (("Presenze", "Francesco Marcon"), 
-                "", "Matteo Mantoan",
-                "", "Leonardo Preo"
-  )
 )[
   Primo incontro tramite Google Meet con la proponente #emph([Eggon]). L’incontro si è tenuto, sotto nostra richiesta per chiarire i dubbi che erano sorti nel gruppo durante la presentazione del capitolato e in successiva analisi.
 

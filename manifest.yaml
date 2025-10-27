@@ -1,20 +1,4 @@
 documents:
-  # Fake documents
-  - title: Esempio verbale
-    source: docs/esempio_verbale/esempio_verbale.typ
-    group: rtb
-    output: esempio_verbale.pdf
-  - title: Esempio ddb
-    source: docs/esempio_ddb/esempio_ddb.typ
-    group: rtb
-    output: esempio_ddb.pdf
-
-  # Real documents
-
-  #####################################################
-  ############   DOCUMENTS MILESTONE_1  ###############
-  #####################################################
-
   - title: Verbale M31 24/10
     source: docs/milestone_1/external_reports/report_M31/external_report_M31.typ
     group: cand
@@ -23,3 +7,7 @@ documents:
     source: docs/milestone_1/external_reports/report_Eggon/external_report_Eggon.typ
     group: cand
     output: external_report_Eggon.pdf
+  - title: Diario di Bordo 2025-10-27
+    source: docs/ddb_2025-10-27/ddb_2025-10-27.typ
+    group: cand
+    output: ddb_2025-10-27.pdf

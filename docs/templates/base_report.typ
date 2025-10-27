@@ -18,7 +18,7 @@
     abstract: abstract,
     changelog: changelog,
     scope: scope,
-    front-info: (),
+    front-info: front-info,
   )[
 
     = Info e Ordine del Giorno

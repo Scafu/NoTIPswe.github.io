@@ -50,5 +50,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pdf-previews
-          path: ./dir/docs-output/
+          path: ./dist/docs
           retention-days: 7

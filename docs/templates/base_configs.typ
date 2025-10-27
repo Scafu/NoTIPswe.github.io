@@ -2,8 +2,9 @@
 #let project-url = "https://notipswe.github.io/"
 #let project_name = link(project-url, [NoTIP])
 
-#let sans-font = "New Computer Modern Math"
-#let serif-font = "Libertinus Serif"
+#let sans-font = "Noto Sans"
+#let serif-font = "Noto Serif"
+#let mono-font = "Noto Sans Mono"
 
 #let color-primary = rgb(181, 17, 25)
 #let color-secondary = rgb(180, 0, 30)
@@ -43,7 +44,8 @@
   set par(justify: true)
 
   show "NoTIP": it => link(project-url, it)
-  set text(lang: "it")
+  set text(lang: "it", font: serif-font)
+  show raw: set text(font: mono-font)
 
   show table.cell.where(y: 0): strong
   set table(
