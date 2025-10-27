@@ -3,7 +3,7 @@ documents:
 ###################       Milestone_1     ############################
 ######################################################################
 
-  # Reports 
+  # External Reports
   - title: Verbale M31 24/10
     source: docs/milestone_1/external_reports/report_M31/external_report_M31.typ
     group: cand
@@ -12,6 +12,15 @@ documents:
     source: docs/milestone_1/external_reports/report_Eggon/external_report_Eggon.typ
     group: cand
     output: external_report_Eggon.pdf
+  # Internal Reports
+  - title: Verbale Interno 2025/10/15
+    source: docs/milestone_1/internal_reports/report_2025-10-15/report_2025-10-15.typ
+    group: cand
+    output: report_2025-10-15.pdf
+  - title: Verbale Interno 2025/10/17
+    source: docs/milestone_1/internal_reports/report_2025-10-17/report_2025-10-17.typ
+    group: cand
+    output: report_2025-10-17.pdf
 
   # DDB
   - title: Diario di Bordo 2025-10-27
