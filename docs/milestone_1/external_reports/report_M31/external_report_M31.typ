@@ -1,19 +1,19 @@
-#import "../../templates/base_report.typ" as base-verbale
+#import "../../../templates/base_report.typ" as base-report
 
 #let changelog = yaml(sys.inputs.changelog_path)
 
-#base-verbale.apply-base-verbale(
+#base-report.apply-base-verbale(
   date: "2025-10-24", 
-  scope: base-verbale.EXTERNAL_SCOPE, 
+  scope: base-report.EXTERNAL_SCOPE, 
   changelog: changelog,
 )[
-  Primo incontro tramite Microsoft Teams con la proponente M31. Lo scopo dell’incontro da noi richiesto è il chiarire i dubbi che sono sorti nel gruppo durante la presentazione del capitolato e nella successiva fase di rilettura ed analisi eseguita.
+  Primo incontro tramite *Microsoft Teams* con la proponente #emph([M31]). Lo scopo dell’incontro da noi richiesto è il chiarire i dubbi che sono sorti nel gruppo durante la presentazione del capitolato e nella successiva fase di rilettura ed analisi eseguita.
 
-  Il presente documento vuole attestare che, in data 24 Ottobre 2025 si è tenuto un incontro, in modalità virtuale tramite Microsoft Teams, durato dalle 10:00 alle 10:40 con l’azienda M31.
+  Il presente documento vuole attestare che, in data *24 Ottobre 2025* si è tenuto un incontro, in modalità virtuale tramite Microsoft Teams, durato dalle *10:00* alle *10:40* con l’azienda #emph([M31]).
   L’obiettivo dell’incontro era andare a chiarire alcuni dubbi riguardanti il capitolato in analisi, attraverso un responso alle domande formulate nel tempo dal gruppo riguardo lo stesso.
   Durante l’incontro, a rappresentare l’azienda, erano presenti: Cristian Pirlog, Moones Mobaraki.
 
-  La riunione è stata effettuata per andare a rispondere principalmente ai seguenti quesiti, che NoTIP aveva già introdotto in una mail richiesta dall’azienda precedente all’incontro:
+  La riunione è stata effettuata per andare a rispondere principalmente ai seguenti quesiti, che #emph([NoTIP]) aveva già introdotto in una mail richiesta dall’azienda precedente all’incontro:
 
   #list(
     [Gateway e simulatore - capire se sarà possibile, anche solo a livello dimostrativo, interfacciarsi con un gateway fisico reale per strutturare meglio il simulatore.],
@@ -27,7 +27,7 @@
 
   L’azienda ha espresso la volontà di ricoprire un duplice ruolo: cliente esigente e supporto tecnico, auspicando che i meeting vengano guidati in primis dal gruppo.
 
-  Per quanto riguarda la comunicazione, M31 preferisce l’uso dell’email per semplificare la gestione interna e chiede che eventuali domande tecniche vengano inviate in anticipo, così da rendere più efficaci gli incontri successivi, evitando perdite di tempo da entrambe le parti.
+  Per quanto riguarda la comunicazione, #emph([M31]) preferisce l’uso dell’email per semplificare la gestione interna e chiede che eventuali domande tecniche vengano inviate in anticipo, così da rendere più efficaci gli incontri successivi, evitando perdite di tempo da entrambe le parti.
 ][
   = Chiarimenti e Risposte ai Dubbi del Gruppo
   L’azienda ha risposto ai quesiti del gruppo fornendo i seguenti chiarimenti:
@@ -50,11 +50,11 @@
 
 
   == Focus di sviluppo
-  M31 consiglia di concentrare gli sforzi sullo sviluppo architetturale del sistema e sui meccanismi di comunicazione, piuttosto che sulla parte grafica e di interfaccia.
+  #emph([M31]) consiglia di concentrare gli sforzi sullo sviluppo architetturale del sistema e sui meccanismi di comunicazione, piuttosto che sulla parte grafica e di interfaccia.
 
 
   == Sicurezza
-  Pur non essendo un requisito strettamente necessario, M31 ha indicato che l’approfondimento della sicurezza e della protezione dei dati sarebbe particolarmente interessante come valore aggiuntivo, ma non richiesto a livelli particolarmente elevati.
+  Pur non essendo un requisito strettamente necessario, #emph([M31]) ha indicato che l’approfondimento della sicurezza e della protezione dei dati sarebbe particolarmente interessante come valore aggiuntivo, ma non richiesto a livelli particolarmente elevati.
 
 
   == Tecnologie
@@ -62,14 +62,14 @@
   È stata inoltre sottolineata l’importanza della documentazione e del test-book, elementi fondamentali nella filosofia aziendale orientata alle pratiche professionali e al rigore metodologico.
 
   == Altro
-  M31 ha concluso l’incontro congratulandosi con il gruppo per le domande dal carattere generale e conoscitivo, con un livello di dettaglio coerente alla fase attuale.
+  #emph([M31]) ha concluso l’incontro congratulandosi con il gruppo per le domande dal carattere generale e conoscitivo, con un livello di dettaglio coerente alla fase attuale.
 
   = Epilogo della Riunione : 
-  L’incontro tenutosi con l'azienda proponente M31 è risultato complessivamente molto positivo da tutti i presenti. I rappresentanti dell’azienda si sono dimostrati molto disponibili e hanno saputo chiarire tutti i dubbi che avevamo, in modo preciso e puntuale.
-  NoTIP ringrazia, nuovamente, M31 per la serietà e disponibilità dimostrata durante l’incontro. 
+  L’incontro tenutosi con l'azienda proponente #emph([M31]) è risultato complessivamente molto positivo da tutti i presenti. I rappresentanti dell’azienda si sono dimostrati molto disponibili e hanno saputo chiarire tutti i dubbi che avevamo, in modo preciso e puntuale.
+  NoTIP ringrazia, nuovamente, #emph([M31]) per la serietà e disponibilità dimostrata durante l’incontro. 
 
   = Approvazione aziendale: 
-  La presente sezione certifica che il verbale è stato esaminato e approvato dai rappresentanti di M31.
+  La presente sezione certifica che il verbale è stato esaminato e approvato dai rappresentanti di #emph([M31]).
   L’avvenuta approvazione è formalmente confermata dalle firme riportate di seguito dei referenti aziendali.
 
 ]

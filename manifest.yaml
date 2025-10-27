@@ -16,10 +16,10 @@ documents:
   #####################################################
 
   - title: Verbale M31 24/10
-    source: docs/milestone_1/external_reports/external_report_M31.typ
-    group: cand   # check if correct
+    source: docs/milestone_1/external_reports/report_M31/external_report_M31.typ
+    group: cand
     output: external_report_M31.pdf
   - title: Verbale Eggon 24/10
-    source: docs/milestone_1/external_reports/external_report_Eggon.typ
-    group: cand   # check if correct
+    source: docs/milestone_1/external_reports/report_Eggon/external_report_Eggon.typ
+    group: cand
     output: external_report_Eggon.pdf
