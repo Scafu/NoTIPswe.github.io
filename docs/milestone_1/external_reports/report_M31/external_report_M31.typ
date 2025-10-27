@@ -11,11 +11,8 @@
                ("", "Mario de Pasquale"), 
                ("", "Valerio Solito"),
                ("", "Alessandro Contarini"),
-               ("Destinazione", "NoTIP"),
-               ("", "Prof. Vardanega Tullio"),
-               ("", "Prof. Cardin Riccardo")
   ),
-  abstract: "Il seguente documento contiene un resoconto dell'incontro tenutosi con la poponente M31, con obiettivo conoscitivo e di chiarimento circa alcuni dubbi tecnici sorti all'interno del gruppo",
+  abstract: "Il seguente documento contiene un resoconto dell'incontro tenutosi con la proponente M31, con obiettivo conoscitivo e di chiarimento circa alcuni dubbi tecnici sorti all'interno del gruppo",
   changelog: changelog,
 
 )[
@@ -31,7 +28,7 @@
     [Gateway e simulatore - capire se sarà possibile, anche solo a livello dimostrativo, interfacciarsi con un gateway fisico reale per strutturare meglio il simulatore.],
     [Sicurezza e penetration testing - chiarire se è prevista una breve introduzione o dimostrazione sulle attività di penetration testing richieste.],
     [Utente (UI) - definire più precisamente quali funzioni e visualizzazioni sono previste per l’utente finale.],
-    [ Tecnologie - ottenere maggiore chiarezza sulle tecnologie suggerite e sul loro impiego nelle diverse parti del sistema.]
+    [Tecnologie - ottenere maggiore chiarezza sulle tecnologie suggerite e sul loro impiego nelle diverse parti del sistema.]
   )
 ][
   L’azienda ha inizialmente re-introdotto il progetto sfruttando una serie di domande ricorrenti che le erano state poste anche da altri gruppi in precedenti incontri, sperando in questo modo di andare a chiarire ulteriori dubbi non esplicitati nella mail sopra indicata. Il progetto si prefigge di essere un’iniziativa sperimentale che, essendo tale, non si interfaccia con sensori attualmente esistenti in forma fisica. L’azienda ci ha tenuto ad essere chiara e specifica sul fatto che il progetto rappresenta un concept volto a esplorare la fattibilità di soluzioni di monitoraggio e gestione dati in ambito medicale (es. case di riposo e strutture sanitarie).
@@ -41,7 +38,7 @@
 
   Per quanto riguarda la comunicazione, #emph([M31]) preferisce l’uso dell’email per semplificare la gestione interna e chiede che eventuali domande tecniche vengano inviate in anticipo, così da rendere più efficaci gli incontri successivi, evitando perdite di tempo da entrambe le parti.
 ][
-  = Chiarimenti e Risposte ai Dubbi del Gruppo
+  = Chiarimenti e risposte ai dubbi del druppo
   L’azienda ha risposto ai quesiti del gruppo fornendo i seguenti chiarimenti:
 
   == Interfaccia utente e gateway
@@ -70,13 +67,13 @@
 
 
   == Tecnologie
-  L’azienda espirme disponibilità e apertura verso l’utilizzo delle tecnologie che più si avvicinano alle competenze attuali e preferenze del gruppo, incoraggiando un approccio flessibile e propositivo, purchè funzionante.
+  L’azienda esprime disponibilità e apertura verso l’utilizzo delle tecnologie che più si avvicinano alle competenze attuali e preferenze del gruppo, incoraggiando un approccio flessibile e propositivo, purchè funzionante.
   È stata inoltre sottolineata l’importanza della documentazione e del test-book, elementi fondamentali nella filosofia aziendale orientata alle pratiche professionali e al rigore metodologico.
 
   == Altro
   #emph([M31]) ha concluso l’incontro congratulandosi con il gruppo per le domande dal carattere generale e conoscitivo, con un livello di dettaglio coerente alla fase attuale.
 
-  = Epilogo della Riunione
+  = Epilogo della riunione
   L’incontro tenutosi con l'azienda proponente #emph([M31]) è risultato complessivamente molto positivo da tutti i presenti. I rappresentanti dell’azienda si sono dimostrati molto disponibili e hanno saputo chiarire tutti i dubbi che avevamo, in modo preciso e puntuale.
   NoTIP ringrazia, nuovamente, #emph([M31]) per la serietà e disponibilità dimostrata durante l’incontro. 
 

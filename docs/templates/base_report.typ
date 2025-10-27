@@ -21,7 +21,7 @@
     front-info: front-info,
   )[
 
-    = Info e Ordine del Giorno
+    = Info e ordine del giorno
     #odg
 
     = Discussione
