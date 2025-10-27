@@ -1,5 +1,8 @@
 #import "base_configs.typ" as base
 
+#let INTERNAL_SCOPE = "Interno"
+#let EXTERNAL_SCOPE = "Esterno"
+
 #let margin-top = 3cm
 #let margin-x = 2cm
 #let margin-bottom = 2cm

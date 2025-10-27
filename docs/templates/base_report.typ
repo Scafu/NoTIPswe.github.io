@@ -1,7 +1,7 @@
 #import "base_document.typ" as base-document
 
-#let INTERNAL_SCOPE = "Interno"
-#let EXTERNAL_SCOPE = "Esterno"
+#let INTERNAL_SCOPE = base-document.INTERNAL_SCOPE
+#let EXTERNAL_SCOPE = base-document.EXTERNAL_SCOPE
 
 #let apply-base-verbale(
   date: "",
