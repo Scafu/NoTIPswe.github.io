@@ -1,7 +1,7 @@
 #import "base_document.typ" as base-document
 
-#let INTERNAL_SCOPE = "Interno"
-#let EXTERNAL_SCOPE = "Esterno"
+#let INTERNAL_SCOPE = base-document.INTERNAL_SCOPE
+#let EXTERNAL_SCOPE = base-document.EXTERNAL_SCOPE
 
 #let apply-base-verbale(
   date: "",
@@ -18,10 +18,10 @@
     abstract: abstract,
     changelog: changelog,
     scope: scope,
-    front-info: (),
+    front-info: front-info,
   )[
 
-    = Info e Ordine del Giorno
+    = Info e ordine del giorno
     #odg
 
     = Discussione
