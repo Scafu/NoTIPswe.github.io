@@ -1,27 +1,27 @@
 import yaml
-import subprocess
 import os
 import sys
 import logging
 import json
+import re
+from pathlib import Path
 from jsonschema import validate, ValidationError
 from dataclasses import dataclass
 from typing import List, Dict, Set, Optional
 
-MANIFEST_SCHEMA_PATH = ".schemas/manifest.schema.json"
-CHANGELOG_SCHEMA_PATH = ".schemas/changelog.schema.json"
+META_SCHEMA_PATH = ".schemas/meta.schema.json"
+GROUP_DIR_REGEX = re.compile(r"^(01-|[1-9][0-9]-)")
+VALID_SUBGROUPS = {"interna", "esterna", "slides"}
 
 
 @dataclass
 class Document:
-    """Represents a single, validated, and enriched document."""
-
-    title: str
     source: str
     output: str
     group: str
-    changelog_path: str
-    changelog: List[Dict]
+    subgroup: str
+    meta_path: str
+    metadata: Dict
     subfiles: Set[str]
     latest_version: int
     last_modified_date: str
@@ -47,122 +47,157 @@ class LocalFileLoader(FileLoader):
             return None
 
 
-class GitFileLoader(FileLoader):
-    """Loads file content from a specific git branch."""
+def discover_documents(scan_root: str = "docs") -> List[Document]:
+    """
+    Scans the filesystem from `scan_root` and creates the document model based on conventions.
+    """
+    logging.info(f"Starting document discovery in '{scan_root}'...")
+    document_model = []
+    scan_root_path = Path(scan_root)
 
-    def __init__(self, branch: str):
-        self.branch = branch
+    if not scan_root_path.is_dir():
+        logging.critical(f"Scan root directory not found: '{scan_root}'")
+        sys.exit(1)
 
-    def get_content(self, file_path: str) -> Optional[str]:
-        logging.debug(f"Loading '{file_path}' from git branch '{self.branch}'")
+    for root, dirs, _ in os.walk(scan_root_path, topdown=True):
+        root_path = Path(root)
+
         try:
-            command = ["git", "show", f"{self.branch}:{file_path}"]
-            result = subprocess.run(
-                command, capture_output=True, text=True, check=True, encoding="utf-8"
+            relative_path = root_path.relative_to(scan_root_path)
+        except ValueError:
+            logging.warning(
+                f"Skipping directory not relative to scan root: {root_path}"
             )
-            return result.stdout
-        except subprocess.CalledProcessError:
-            logging.error(f"File '{file_path}' not found in branch '{self.branch}'.")
-            return None
+            continue
 
+        path_parts = relative_path.parts
 
-def load_documents_model(manifest_path="manifest.yaml") -> List[Document]:
-    """Factory function to build the document model from local files."""
-    logging.info("Building documents model from local files...")
-    local_loader = LocalFileLoader()
-    return _build_model_with_loader(manifest_path, local_loader)
+        if not path_parts:
+            if "00-templates" in dirs:
+                logging.debug("Skipping '00-templates' directory.")
+                dirs.remove("00-templates")
+            continue
 
+        if len(path_parts) == 1:
+            group_dir_name = path_parts[0]
+            if not GROUP_DIR_REGEX.match(group_dir_name):
+                logging.warning(f"Skipping non-conforming group directory: {root_path}")
+                dirs.clear()
+            continue
 
-def load_model_from_git(
-    remote_branch_name: str, manifest_path="manifest.yaml"
-) -> List[Document]:
-    """Factory function to build the document model from a git branch."""
-    logging.info(f"Building documents model from git branch '{remote_branch_name}'...")
-    git_loader = GitFileLoader(remote_branch_name)
-    return _build_model_with_loader(manifest_path, git_loader)
+        if len(path_parts) == 2:
+            subgroup_name = path_parts[1]
+            if subgroup_name not in VALID_SUBGROUPS:
+                logging.warning(
+                    f"Skipping non-conforming subgroup directory: {root_path}"
+                )
+                dirs.clear()
+            continue
 
+        if len(path_parts) == 3:
+            group_dir_name = path_parts[0]
+            group = group_dir_name
+            subgroup = path_parts[1]
 
-def _build_model_with_loader(manifest_path: str, loader: FileLoader) -> List[Document]:
-    """
-    Generic core logic to build the model using a provided loader.
-    """
-    manifest_content = loader.get_content(manifest_path)
-    if not manifest_content:
-        logging.critical(f"Could not load manifest at '{manifest_path}'.")
-        sys.exit(1)
+            doc = _process_document_dir(root_path, group, subgroup)
 
-    manifest_data = _parse_and_validate_yaml(
-        manifest_content, manifest_path, MANIFEST_SCHEMA_PATH, "Manifest"
-    )
-    if not manifest_data:
-        sys.exit(1)
+            if not doc:
+                exit(1)
 
-    documents_list = manifest_data.get("documents", [])
-    if not documents_list:
-        logging.warning("Manifest 'documents' list is empty. Nothing to build.")
-        return []
+            document_model.append(doc)
 
-    document_model = [
-        _process_document_entry(entry, loader) for entry in documents_list
-    ]
+            dirs.clear()
+            continue
 
-    if None in document_model:
-        logging.critical("Model building failed due to validation errors.")
-        sys.exit(1)
+        if len(path_parts) > 3:
+            dirs.clear()
+            continue
 
-    logging.info(f"Successfully built a model with {len(document_model)} documents.")
+    if not document_model:
+        logging.warning("Discovery finished. No valid documents were found.")
+    else:
+        logging.info(
+            f"Successfully built a model with {len(document_model)} documents."
+        )
+
     return document_model
 
 
-def _process_document_entry(entry: Dict, loader: FileLoader) -> Optional[Document]:
+def _process_document_dir(
+    doc_dir_path: Path, group: str, subgroup: str
+) -> Optional[Document]:
     """
-    Takes a single manifest entry and transforms it into a Document object,
-    validating each step using the provided loader.
+    Given a valid document directory path, validates it and returns a Document object if valid.
     """
-    # La validazione della struttura dell'entry è già stata fatta dallo schema del manifest
-    title = entry["title"]
-    source_path = entry["source"]
-    changelog_path = _get_changelog_path(source_path)
+    doc_name = doc_dir_path.name
+    logging.debug(f"Processing potential document: '{doc_name}'")
 
-    changelog_content = loader.get_content(changelog_path)
-    if changelog_content is None:
+    meta_path = doc_dir_path / f"{doc_name}.meta.yaml"
+    source_path = doc_dir_path / f"{doc_name}.typ"
+
+    meta_path_str = str(meta_path).replace(os.path.sep, "/")
+    source_path_str = str(source_path).replace(os.path.sep, "/")
+
+    if not meta_path.exists():
         logging.error(
-            f"Validation failed for '{title}': Could not load changelog at '{changelog_path}'."
+            f"Validation failed for '{doc_dir_path}': Missing '{meta_path.name}'"
+        )
+        return None
+    if not source_path.exists():
+        logging.error(
+            f"Validation failed for '{doc_dir_path}': Missing '{source_path.name}'"
         )
         return None
 
-    changelog_data = _parse_and_validate_yaml(
-        changelog_content, changelog_path, CHANGELOG_SCHEMA_PATH, title
+    loader = LocalFileLoader()
+    meta_content = loader.get_content(meta_path_str)
+    if meta_content is None:
+        return None
+
+    meta_data = _parse_and_validate_yaml(
+        meta_content, meta_path_str, META_SCHEMA_PATH, doc_name
     )
-    if not changelog_data:
+    if not meta_data:
         return None
 
-    # Lo schema valida la struttura, ora validiamo la logica di business (la sequenza)
-    versions = [c["version"] for c in changelog_data]
-    if not _validate_version_sequence(versions, changelog_path, title):
+    changelog = meta_data.get("changelog")
+    if not changelog or not isinstance(changelog, list) or len(changelog) == 0:
+        logging.error(
+            f"Validation failed for '{doc_name}': '{meta_path_str}' has no 'changelog' entries."
+        )
         return None
 
-    subfiles = _find_associated_typ_files(source_path)
+    versions = [c["version"] for c in changelog]
+    if not _validate_version_sequence(versions, meta_path_str, doc_name):
+        return None
+
+    try:
+        relative_parent = doc_dir_path.parent.relative_to("docs")
+    except ValueError:
+        logging.error(f"Could not determine relative path for: {doc_dir_path.parent}")
+        return None
+
+    output_name = f"{doc_name}.pdf"
+    output_path = relative_parent / output_name
+    output_path_str = str(output_path).replace(os.path.sep, "/")
+
+    all_typ_files = _find_associated_typ_files(source_path_str)
+    if source_path_str in all_typ_files:
+        all_typ_files.remove(source_path_str)
+
+    logging.debug(f"Found {len(all_typ_files)} subfiles for '{doc_name}'")
 
     return Document(
-        title=title,
-        source=source_path,
-        output=entry["output"],
-        group=entry["group"],
-        changelog_path=changelog_path,
-        changelog=changelog_data,
-        subfiles=subfiles,
-        latest_version=changelog_data[0]["version"],
-        last_modified_date=changelog_data[0]["date"],
+        source=source_path_str,
+        output=output_path_str,
+        group=group,
+        subgroup=subgroup,
+        meta_path=meta_path_str,
+        metadata=meta_data,
+        subfiles=all_typ_files,
+        latest_version=changelog[0]["version"],
+        last_modified_date=changelog[0]["date"],
     )
-
-
-def _get_changelog_path(source_path: str) -> str:
-    """Given a source path, calculates the path of its changelog."""
-    if not source_path:
-        return ""
-    base_name = os.path.splitext(source_path)[0]
-    return f"{base_name}.changelog.yaml"
 
 
 def _find_associated_typ_files(source_path: str) -> Set[str]:
