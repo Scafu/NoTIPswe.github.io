@@ -11,7 +11,7 @@ from typing import List, Dict, Set, Optional
 
 META_SCHEMA_PATH = ".schemas/meta.schema.json"
 GROUP_DIR_REGEX = re.compile(r"^(01-|[1-9][0-9]-)")
-VALID_SUBGROUPS = {"interna", "esterna", "slides"}
+VALID_SUBGROUPS = {"interno", "esterno", "slides"}
 
 
 @dataclass
@@ -81,7 +81,8 @@ def discover_documents(scan_root: str = "docs") -> List[Document]:
         if len(path_parts) == 1:
             group_dir_name = path_parts[0]
             if not GROUP_DIR_REGEX.match(group_dir_name):
-                logging.warning(f"Skipping non-conforming group directory: {root_path}")
+                logging.warning(
+                    f"Skipping non-conforming group directory: {root_path}")
                 dirs.clear()
             continue
 
@@ -174,7 +175,8 @@ def _process_document_dir(
     try:
         relative_parent = doc_dir_path.parent.relative_to("docs")
     except ValueError:
-        logging.error(f"Could not determine relative path for: {doc_dir_path.parent}")
+        logging.error(
+            f"Could not determine relative path for: {doc_dir_path.parent}")
         return None
 
     output_name = f"{doc_name}.pdf"

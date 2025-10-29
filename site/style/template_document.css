@@ -1,0 +1,239 @@
+body {
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ========================
+   Layout principale
+======================== */
+.container {
+  max-width: 1200px;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+/* ========================
+   Breadcrumbs
+======================== */
+.breadcrumbs {
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #a0aec0;
+}
+
+.breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumbs a:hover {
+  color: #3182ce;
+}
+
+/* ========================
+   Barra di ricerca
+======================== */
+.search-bar {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #2d3748;
+  background-color: #1a202c;
+  color: #f7fafc;
+  font-size: 1.2rem;
+}
+
+.search-bar input::placeholder {
+  color: #a0aec0;
+}
+
+.search-bar .icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0aec0;
+  font-size: 1.2rem;
+}
+
+/* ========================
+   Tabella documenti
+======================== */
+.table-container {
+  overflow-x: auto;
+  border: 1px solid #2d3748;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.table-header {
+  text-align: start;
+  background-color: #1a202c;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #f7fafc;
+  border-bottom: 1px solid #2d3748;
+}
+
+.doc-table th,
+.doc-table td {
+  padding-left: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 3rem;
+  color: #f7fafc;
+  text-align: left;
+}
+
+.doc-table tr {
+  border-bottom: 1px solid #2d3748;
+}
+
+.doc-table tr:last-child {
+  border-bottom: none;
+}
+
+/* ========================
+   Pulsante Download
+======================== */
+#download-td {
+  text-align: right;
+  vertical-align: middle; /* centra il contenuto nella cella */
+  display: flex; /* trasforma la cella in contenitore flex */
+  justify-content: flex-end; /* allinea a destra */
+  align-items: center; /* centra verticalmente */
+  gap: 0.5rem;
+}
+
+.btn-download {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem; /* stesso padding per entrambi */
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  height: 50px; /* altezza fissa */
+  line-height: 1.2; /* per allineare verticalmente il testo */
+  transition: opacity 0.3s;
+}
+
+.btn-download {
+  background-color: #3182ce;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+  background-color: #265bac;
+}
+
+.btn-download .icon {
+  font-size: 1.2rem;
+}
+
+.preview-link {
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem; /* spazio tra icona e testo */
+  color: #38a169; /* verde */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.preview-link span:not(.icon):hover {
+  text-decoration: underline;
+}
+
+.icon[data-icon="download"]::before {
+  content: "\f019";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+.icon[data-icon="visibility"]::before {
+  content: "\f06e";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+/* ========================
+   Responsive
+======================== */
+@media (max-width: 992px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .doc-table th,
+  .doc-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .breadcrumbs {
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .search-bar input {
+    font-size: 0.9rem;
+    padding-left: 2rem;
+  }
+
+  .table-container {
+    border-radius: 0.25rem;
+  }
+
+  .doc-table {
+    font-size: 0.85rem;
+    min-width: 600px;
+  }
+
+  .btn-download {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 50px auto;
+  }
+
+  .search-bar input {
+    padding: 0.6rem 1rem 0.6rem 2rem;
+  }
+
+  .btn-download {
+    padding: 0.3rem 0.6rem;
+  }
+}

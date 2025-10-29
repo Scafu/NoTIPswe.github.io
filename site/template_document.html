@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoTIP Group Project Documentation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/template_document.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="assets/avatarUpdatedCrop.jpg" id="image-navbar" />
+        <h2 class="notip">NoTIP</h2>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a>
+        <span>&gt;</span>
+        <span><!--GROUP_LIST_MARKER--></span>
+      </div>
+
+      <!-- Titolo -->
+      <h1><!--GROUP_LIST_MARKER--></h1>
+
+      <!-- Barra di ricerca -->
+      <div class="search-bar">
+        <span class="icon">&#128269;</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search in <!--GROUP_LIST_MARKER-->..."
+        />
+      </div>
+      <div class="table-container">
+        <table class="doc-table" id="doc-table">
+          <thead class="table-header">
+            <tr>
+              <th data-column="title">Titolo</th>
+              <th data-column="version">Ultima Versione</th>
+              <th data-column="type">Utilizzo</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--DOCUMENTS_LIST_MARKER-->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-container">
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:support@notip.group">Contact Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Link Utili</h4>
+          <ul>
+            <li><a href="#">Glossario</a></li>
+            <li><a href="#">Progetto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Dove Trovarci</h4>
+          <div class="socials">
+            <a
+              href="https://github.com/NoTipSwe"
+              data-icon="github"
+              aria-label="GitHub"
+            ></a>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 2rem">
+        © 2024 NoTIP Group. All Rights Reserved.
+      </p>
+    </footer>
+    <script>
+      document
+        .getElementById("searchInput")
+        .addEventListener("keyup", function () {
+          const filter = this.value.toLowerCase();
+          const rows = document.querySelectorAll(".doc-table tbody tr");
+
+          rows.forEach((row) => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+          });
+        });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const table = document.querySelector(".doc-table");
+        const ths = table.querySelectorAll("th");
+        const tbody = table.querySelector("tbody");
+
+        // Ordine base e stato corrente
+        const baseOrdine = ["interno", "esterno", "slides"];
+        let currentStartIndex = 0;
+
+        ths.forEach((th, idx) => {
+          if (th.textContent.trim().toLowerCase() === "utilizzo") {
+            th.style.cursor = "pointer";
+            th.addEventListener("click", () => {
+              const rows = Array.from(tbody.querySelectorAll("tr"));
+              const grouped = {};
+
+              // Raggruppa le righe per valore di utilizzo
+              rows.forEach((row) => {
+                const tipo = row.children[idx].innerText.trim().toLowerCase();
+                if (!grouped[tipo]) grouped[tipo] = [];
+                grouped[tipo].push(row);
+              });
+
+              // Calcola ordine ruotato
+              const ordineRuotato = [
+                ...baseOrdine.slice(currentStartIndex),
+                ...baseOrdine.slice(0, currentStartIndex),
+              ];
+              currentStartIndex = (currentStartIndex + 1) % baseOrdine.length;
+
+              // Ricostruisci tabella
+              tbody.innerHTML = "";
+              ordineRuotato.forEach((tipo) => {
+                if (grouped[tipo]) {
+                  grouped[tipo].forEach((row) => tbody.appendChild(row));
+                }
+              });
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
