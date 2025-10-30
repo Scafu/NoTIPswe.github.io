@@ -63,7 +63,7 @@ def _group_sort_key(group_dir_name: str):
             return (0, 0)
         return (1, -num)
     except Exception:
-        return (2, 0)  # Fallback for non-numeric groups
+        return (2, 0)
 
 
 def _subgroup_sort_key(subgroup_name: str) -> int:
@@ -71,15 +71,11 @@ def _subgroup_sort_key(subgroup_name: str) -> int:
     order = {"esterno": 0, "interno": 1, "slides": 2}
     return order.get(subgroup_name, 99)  # Fallback
 
-# Table content generation from docs_folder
-
 
 def html_table_rows_from_docmodel(
     document_model: List[docs_lib.Document], docs_folder: str
 ) -> str:
     """Generates HTML table rows for documents contained in document_model."""
-
-    # 1. Raggruppa i documenti per directory di gruppo e sottogruppo
     grouped_docs = defaultdict(lambda: defaultdict(list))
     for doc in document_model:
         try:
@@ -98,51 +94,23 @@ def html_table_rows_from_docmodel(
 
     for group_name in sorted_groups:
         subgroups = grouped_docs[group_name]
-
         sorted_subgroups = sorted(subgroups.keys(), key=_subgroup_sort_key)
-
         for subgroup_name in sorted_subgroups:
             docs_list = subgroups[subgroup_name]
-
-            # 1° Version, if we wanna divide the list into 3 section
-            # html_lines.append(f"<h2>{subgroup_name.capitalize()}</h2>")
-            # html_lines.append('<table class="doc-table">')
-            '''html_lines.append("""
-                <thead>
-                    <tr>
-                        <th>Titolo</th>
-                        <th>Ultima Versione</th>
-                        <th id="download-th">Download</th>
-                    </tr>
-                </thead>
-            """)'''
-
             for doc in sorted(docs_list, key=lambda d: d.last_modified_date, reverse=True):
-                link_path = posixpath.join("..", docs_folder, group_name, subgroup_name, Path(
-                    doc.output).stem, Path(doc.output).name)
+                link_path = posixpath.join(docs_folder, doc.output)
                 title = doc.metadata.get("title", "Untitled")
                 version = doc.latest_version
                 doc_type = subgroup_name.capitalize()
+                doc_date = doc.last_modified_date
 
-                # 1° Version
-                '''row_html = f"""
-                <tr>
-                    <td>{title}</td>
-                    <td>v{version}.0</td>
-                    <td><a href="file.pdf" target="_blank" rel="noopener noreferrer">Preview</a></td>
-                    <td>
-                        <a href="{link_path}" class="btn-download" download>
-                            <span class="icon">&#8681;</span>Download
-                        </a>
-                    </td>
-                </tr>
-                """'''
                 # 2° Version
                 row_html = f"""
                 <tr>
                     <td>{title}</td>
-                    <td>v{version}.0</td>
+                    <td>v{version}</td>
                     <td>{doc_type}</td>
+                    <td>{doc_date}
                     <td id="download-td">
                     <a href="{link_path}" target="_blank" rel="noopener noreferrer" class="preview-link">
                     <span class="icon" data-icon="visibility"></span><span>Preview</span>
@@ -154,65 +122,56 @@ def html_table_rows_from_docmodel(
                 </tr>
                 """
                 html_lines.append(row_html)
-
-            logging.info(f"Metadata keys: {list(doc.metadata.keys())}")
-
     return "\n".join(html_lines)
 
 
-def format_category_name(category_name: str) -> str:
+def format_group_name(group_name: str) -> str:
     """In case we have acronymns we have to put here the complete name"""
     mapping = {
         "rtb": "Requirements and Technology Baseline (RTB)",
         "pb": "Product Baseline (PB)"
     }
-    return mapping.get(category_name.lower(), category_name.capitalize())
+    return mapping.get(group_name.lower(), group_name.capitalize())
 
 
-def generate_category_links(template_path, output_path, docs_folder="docs"):
+def generate_group_cards(template_path, output_path, docs_folder="docs"):
     """
     This function generates the category cards from folder names inside `docs`,
     ignoring folders starting with '00-' and linking to `<categoria>.html`.
     """
     docs_path = Path(docs_folder)
-    categories_folders = []
-
-    # Trova tutte le cartelle valide
+    groups_folders = []
+    # This does not include anything related to the 00 milestone
     for folder in sorted(docs_path.iterdir()):
         if folder.is_dir() and "-" in folder.name:
             if folder.name.startswith("00-"):
                 continue
-            categories_folders.append(folder.name)
-
-    # Genera l'HTML
+            groups_folders.append(folder.name)
 
     html_snippet = ""
-    for cat_folder in categories_folders:
-        # Estrai solo la parte dopo il trattino
-        category_name = cat_folder.split("-", 1)[1].replace("_", " ")
-        display_name = format_category_name(category_name)
-        href_name = category_name.lower().replace(
-            " ", "_") + ".html"  # es. "rtb" -> "rtb.html"
-        num_docs = len(list((docs_path / cat_folder).rglob("*.pdf")))
+    for single_folder in groups_folders:
+        group_name = single_folder.split("-", 1)[1].replace("_", " ")
+        display_name = format_group_name(group_name)
+        href_name = group_name.lower().replace(
+            " ", "_") + ".html"
+        num_docs = len(list((docs_path / single_folder).rglob("*.pdf")))
+        folder_path = docs_path / single_folder
+        documents_word = "Documenti" if num_docs != 1 else "Documento"
         html_snippet += f'''
-        <a class="category-card" href="{href_name}">
+        <a class="group-card" href="{href_name}">
             <h3>{display_name}</h3>
-            <p class="doc-count">{num_docs} Documenti</p>
+            <p class="doc-count">{num_docs} {documents_word}</p>
         </a>
         '''
-
-    # Popola il template
     template_content = Path(template_path).read_text(encoding="utf-8")
     populated_content = template_content.replace(
-        "<!--CATEGORIES_LIST_MARKER-->", html_snippet)
+        "<!--GROUPS_LIST_MARKER-->", html_snippet)
     Path(output_path).write_text(populated_content, encoding="utf-8")
-    print(f"Pagina generata: {output_path}")
 
 
 def populate_template(template_path, output_path, html_blocks):
     """Injects generated HTML blocks into the template file based on comment markers."""
     logging.info(f"Populating template '{template_path}'...")
-
     try:
         template_content = Path(template_path).read_text(encoding="utf-8")
     except FileNotFoundError:
@@ -234,9 +193,7 @@ def populate_template(template_path, output_path, html_blocks):
 
 
 def main():
-    """Genera il sito statico con file separati per ciascun gruppo di documenti."""
     setup_logging()
-
     parser = argparse.ArgumentParser(
         description="Generate the static site with document links."
     )
@@ -247,18 +204,11 @@ def main():
     parser.add_argument("--docs-folder", default="docs",
                         help="Sottocartella dei PDF compilati.")
     args = parser.parse_args()
-
-    # Scopri tutti i documenti
-    document_model = docs_lib.discover_documents(args.docs_folder)
-    logging.info(f"Trovati {len(document_model)} documenti.")
-
-    # Assicurati che la cartella di output esista
+    document_model = docs_lib.discover_documents("docs")
+    logging.info(f"Found {len(document_model)} documents.")
     os.makedirs(args.outdir, exist_ok=True)
     copy_static_assets(args.site_dir, args.outdir)
 
-    # =========================
-    # Genera homepage dinamica
-    # =========================
     home_template = os.path.join(args.site_dir, "index.template.html")
     home_output = os.path.join(args.outdir, "index.html")
 
@@ -268,52 +218,40 @@ def main():
         logging.critical(f"Home template not found: '{home_template}'")
         sys.exit(1)
 
-    # Genera dinamicamente la homepage con le categorie
-    generate_category_links(
+    generate_group_cards(
         template_path=home_template,
         output_path=home_output,
-        docs_folder=args.docs_folder
+        docs_folder=os.path.join(args.outdir, "docs")
     )
-    logging.info(f"Homepage generata: {home_output}")
 
-    # ==============================
-    # Genera pagine per ogni gruppo
-    # ==============================
     template_file = os.path.join(args.site_dir, "template_document.html")
 
-    # Leggi tutte le sottocartelle del docs_folder (es. 01-rtb, 02-pb, ecc.)
     docs_path = Path(args.docs_folder)
-    category_folders = [
+
+    # This not take anything related with 00 milestone
+    group_folders = [
         f for f in sorted(docs_path.iterdir())
         if f.is_dir() and "-" in f.name and not f.name.startswith("00-")
     ]
-
-    for folder in category_folders:
-        # Estrai il nome categoria (es. "01-rtb" → "rtb")
-        category_name = folder.name.split("-", 1)[1]
-        display_name = format_category_name(category_name)
-
-        # Filtra i documenti che appartengono a questa categoria
+    # For every
+    for folder in group_folders:
+        group_name = folder.name.split("-", 1)[1]
+        display_name = format_group_name(group_name)
         filtered_docs = [
-            d for d in document_model if category_name.lower() in d.source.lower()
+            d for d in document_model if group_name.lower() in d.source.lower()
         ]
-
         html_rows = html_table_rows_from_docmodel(
             filtered_docs, args.docs_folder)
-
-        # Genera il file HTML di output dinamico (es. rtb.html)
         output_file = os.path.join(
-            args.outdir, f"{category_name.lower()}.html")
-
+            args.outdir, f"{group_name.lower()}.html")
         html_blocks = {
             "GROUP": display_name,
             "DOCUMENTS": html_rows
         }
-
         populate_template(template_file, output_file, html_blocks)
-        logging.info(f"Pagina generata per {display_name}: {output_file}")
+        logging.info(f"{display_name}.html generated in path: {output_file}")
 
-    logging.info("Generazione del sito completata.")
+    logging.info("Generation completed.")
 
 
 if __name__ == "__main__":

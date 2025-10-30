@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,18 +21,20 @@
   <body>
     <header>
       <div class="logo">
-        <img src="assets/avatarUpdatedCrop.png" id="image-navbar" />
-        <h2>NoTIP</h2>
+        <h2>NoTIP Docs</h2>
       </div>
       <nav>
         <a href="index.html">Home</a>
         <a href="aboutus.html">About</a>
-        <a href="#">Contact</a>
       </nav>
     </header>
-
     <section class="hero">
       <div class="hero-content">
+        <h1>NoTIP</h1>
+        <div>
+          <span class="typed-text"></span
+          ><span class="cursor blink">&nbsp;</span>
+        </div>
         <p>
           Questo è il sito per tutta la documentazione riguardante il progetto
           affidato a NoTIP
@@ -40,43 +42,72 @@
       </div>
       <img src="assets/avatarUpdated.jpg" alt="logo NoTIP" id="hero-image" />
     </section>
-    <section class="categories">
+    <section class="groups">
       <h2>Categorie di Documenti</h2>
       <p>Accedi velocemente in base alla categoria.</p>
-      <div class="category-grid">
-        <!--CATEGORIES_LIST_MARKER-->
+      <div class="group-grid">
+        <!--GROUPS_LIST_MARKER-->
       </div>
     </section>
-
     <footer>
       <div class="footer-container">
-        <div>
-          <h4>Contact</h4>
-          <ul>
-            <li><a href="mailto:support@notip.group">Contact Support</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Link Utili</h4>
-          <ul>
-            <li><a href="#">Glossario</a></li>
-            <li><a href="#">Progetto</a></li>
-          </ul>
-        </div>
         <div>
           <h4>Dove Trovarci</h4>
           <div class="socials">
             <a
               href="https://github.com/NoTipSwe"
               data-icon="github"
-              aria-label="GitHub"
+              aria-label="vai su GitHub"
+            ></a>
+            <a
+              href="mailto:Notip.swe@gmail.com"
+              data-icon="email"
+              aria-label="manda Email"
             ></a>
           </div>
         </div>
       </div>
-      <p style="text-align: center; margin-top: 2rem">
-        © 2024 NoTIP Group. All Rights Reserved.
-      </p>
+      <p style="text-align: center; margin-top: 2rem">© 2024 NoTIP Group.</p>
     </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const typedText = document.querySelector(".typed-text");
+        const cursor = document.querySelector(".cursor");
+        const textArray = ["No Tests in Production", "Tips are not accepted"];
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        const erase = () => {
+          if (charIndex > 0) {
+            cursor.classList.remove("blink");
+            typedText.textContent = textArray[textArrayIndex].slice(
+              0,
+              charIndex - 1
+            );
+            charIndex--;
+            setTimeout(erase, 80);
+          } else {
+            cursor.classList.add("blink");
+            textArrayIndex++;
+            if (textArrayIndex > textArray.length - 1) {
+              textArrayIndex = 0;
+            }
+            setTimeout(type, 1000);
+          }
+        };
+        const type = () => {
+          if (charIndex <= textArray[textArrayIndex].length - 1) {
+            cursor.classList.remove("blink");
+            typedText.textContent +=
+              textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, 120);
+          } else {
+            cursor.classList.add("blink");
+            setTimeout(erase, 1000);
+          }
+        };
+        type();
+      });
+    </script>
   </body>
 </html>
