@@ -39,7 +39,7 @@ def compile_document(doc: docs_lib.Document, output_dir: str):
         doc.source,
         complete_output_path,
         "--input",
-        f"meta_path={meta_path_relative}",
+        f"meta-path={meta_path_relative}",
         "--root",
         ".",
         "--ignore-system-fonts",
