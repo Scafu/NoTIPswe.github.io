@@ -1,4 +1,4 @@
-#import "../templates/base_ddb.typ" as base-ddb
+#import "../../../00-templates/base_ddb.typ" as base-ddb
 
 #base-ddb.apply-base-ddb(
   sprint: 0,
@@ -29,6 +29,6 @@
   - Fase decisionale capitolati.
 
   - Effetto domino organizzativo.
-  
+
   - Difficoltà di pianificazione.
 ]

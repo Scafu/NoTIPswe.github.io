@@ -1,31 +1,37 @@
-#import "../../../templates/base_configs.typ" as base
-#import "../../../templates/base_report.typ" as base-report
+#import "../../../00-templates/base_configs.typ" as base
+#import "../../../00-templates/base_verbale.typ" as base-report
 
-#let changelog = yaml(sys.inputs.changelog_path)
+#let metadata = yaml(sys.inputs.meta-path)
 
 #base-report.apply-base-verbale(
-  date: "2025-10-24", 
+  date: "2025-10-17",
   scope: base-report.INTERNAL_SCOPE,
-  front-info: (("Presenze", "Francesco Marcon"),
-               ("", "Valerio Solito"),
-               ("", "Leonardo Preo"),
-               ("", "Mario de Pasquale"), 
-               ("", "Alessandro Mazzariol"),
-               ("", "Matteo Mantoan"),
+  front-info: (
+    (
+      "Presenze",
+      [
+        Francesco Marcon \
+        Valerio Solito \
+        Leonardo Preo \
+        Mario de Pasquale \
+        Alessandro Mazzariol \
+        Matteo Mantoan \
+      ],
+    ),
   ),
   abstract: "Durante la riunione, il gruppo NoTIP ha discusso le regole per la gestione dei documenti, la pianificazione Scrum e la rendicontazione delle attività.",
-  changelog: changelog,
+  changelog: metadata.changelog,
 )[
   Con il presente documento si attesta che in data *17 Ottobre 2025* si è tenuta una riunione interna del gruppo _NoTIP_, svoltasi in modalità virtuale sul server Discord ufficiale del gruppo.\
   La riunione ha avuto inizio alle ore *17:00* e si è conclusa alle ore *18:10*.\
-  Si prevede di: 
+  Si prevede di:
   #list(
     [Versionamento e pubblicazione dei verbali],
     [Applicazione della metodologia Scrum e definizione dello sprint planning],
     [Rendicontazione delle ore di lavoro],
   )\
 ][
-  == Discussione sul versionamento e pubblicazione verbali 
+  == Discussione sul versionamento e pubblicazione verbali
   Il primo punto affrontato ha riguardato la definizione delle modalità di versionamento e pubblicazione dei verbali, al fine di garantire un processo ordinato e tracciabile per la gestione della documentazione ufficiale del gruppo.\
   È stato concordato che:
   Ogni commit dovrà essere *atomico*, cioè riguardare un solo documento per volta, evitando modifiche simultanee a file diversi.\
@@ -54,7 +60,7 @@
   Nel caso in cui il documento non risultasse conforme, l’amministratore potrà:
   #list(
     [segnalare i problemi tramite commento sulla PR],
-    [modificare direttamente la PR per correggere piccoli errori (previa verifica dei permessi)]
+    [modificare direttamente la PR per correggere piccoli errori (previa verifica dei permessi)],
   )
 
   In caso di revisione richiesta, l’editor dovrà creare una nuova PR correttiva.\
@@ -66,7 +72,7 @@
   #list(
     [La durata di ogni sprint sarà di due settimane solari, consentendo un equilibrio tra pianificazione e flessibilità],
     [All’inizio di ogni sprint, durante la fase di planning, verrà valutata la disponibilità dei membri per determinare chi assumerà il ruolo di *Scrum Master*. \
-    Tale ruolo verrà rotato ad ogni ciclo, in modo da garantire un’equa distribuzione delle responsabilità e delle opportunità di gestione.],
+      Tale ruolo verrà rotato ad ogni ciclo, in modo da garantire un’equa distribuzione delle responsabilità e delle opportunità di gestione.],
   )
 
   Il gruppo ha sottolineato che questa impostazione è da considerarsi provvisoria: la decisione definitiva verrà presa in accordo con l’azienda proponente, per allineare il metodo di lavoro interno a quello richiesto dal contesto progettuale.
@@ -89,7 +95,7 @@
   Si prevede di discutere, nel prossimo incontro, i seguenti punti all’ordine del giorno:
   #list(
     [Definizione del template ufficiale per i verbali],
-    [Definizione e formalizzazione del metodo di versionamento adottato]
+    [Definizione e formalizzazione del metodo di versionamento adottato],
   )
 
   La seduta si è svolta in un clima costruttivo e di piena collaborazione.

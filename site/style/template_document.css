@@ -1,0 +1,271 @@
+body {
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .breadcrumbs {
+    color: var(--text-muted-dark);
+  }
+  .search-bar input {
+    border: 1px solid rgb(from var(--text-muted-dark) r g b/20%);
+    background-color: var(--secondary-dark);
+    color: var(--text-dark);
+  }
+  .search-bar input::placeholder {
+    color: var(--text-muted-dark);
+  }
+  .search-bar input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .table-container {
+    border: 1px solid rgb(from var(--text-muted-dark) r g b/20%);
+  }
+  .table-header {
+    background-color: var(--secondary-dark);
+    color: #f7fafc;
+    border-bottom: 1px solid rgb(from var(--text-muted-dark) r g b/20%);
+  }
+  .doc-table th,
+  .doc-table td {
+    color: var(--text-dark);
+  }
+  .doc-table tr {
+    border-bottom: 1px solid var(--secondary-dark);
+  }
+  .btn-download {
+    background-color: var(--secondary-dark);
+    color: var(--text-dark);
+    transition: background-color 0.3s;
+    border-bottom: 1px solid rgb(from var(--text-muted-dark) r g b/20%);
+  }
+  .btn-download:hover {
+    background-color: var(--accent);
+    color: var(--text-dark);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .breadcrumbs {
+    color: var(--text-muted-light);
+  }
+  .search-bar input {
+    border: 1px solid rgb(from var(--text-muted-light) r g b/20%);
+    background-color: var(--secondary-light);
+    color: var(--text-light);
+  }
+
+  .search-bar input::placeholder {
+    color: var(--text-muted-light);
+  }
+  .search-bar input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .table-container {
+    border: 1px solid rgb(from var(--text-muted-light) r g b/20%);
+  }
+  .table-header {
+    background-color: var(--secondary-light);
+    color: #f7fafc;
+    border-bottom: 1px solid rgb(from var(--text-muted-light) r g b/20%);
+  }
+  .doc-table th,
+  .doc-table td {
+    color: var(--text-light);
+  }
+  .doc-table tr {
+    border-bottom: 1px solid var(--secondary-light);
+  }
+  .btn-download {
+    background-color: var(--secondary-light);
+    color: var(--text-light);
+    transition: background-color ease 0.3s;
+    border-bottom: 1px solid rgb(from var(--text-muted-light) r g b/20%);
+  }
+  .btn-download:hover {
+    background-color: var(--accent);
+    color: var(--text-dark);
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 60px auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.breadcrumbs {
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+
+.search-bar {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.search-bar .icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+.container h1 {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.table-header {
+  text-align: start;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.doc-table th,
+.doc-table td {
+  padding-left: 2.5rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  padding-right: 2.5rem;
+  text-align: left;
+}
+
+.doc-table tr:last-child {
+  border-bottom: none;
+}
+
+#download-td {
+  text-align: right;
+  vertical-align: middle;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+#download-td span:not(.icon) {
+  font-size: 0.8rem;
+}
+
+.btn-download {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  height: 40px;
+  width: 110px;
+  line-height: 1.2;
+  transition: opacity 0.3s;
+}
+
+.btn-download .icon {
+  font-size: 1.2rem;
+}
+
+.preview-link {
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #38a169;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.preview-link span:not(.icon):hover {
+  text-decoration: underline;
+}
+
+.icon[data-icon="download"]::before {
+  content: "\f019";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+.icon[data-icon="visibility"]::before {
+  content: "\f06e";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .doc-table th,
+  .doc-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .breadcrumbs {
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .search-bar input {
+    font-size: 0.9rem;
+    padding-left: 2rem;
+  }
+
+  .table-container {
+    border-radius: 0.25rem;
+  }
+
+  .doc-table {
+    font-size: 0.85rem;
+    min-width: 600px;
+  }
+
+  .btn-download {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (min-width: 540px) {
+  .search-bar input {
+    padding: 0.6rem 1rem 0.6rem 3rem;
+  }
+
+  .btn-download {
+    padding: 0.3rem 0.6rem;
+  }
+}

@@ -1,29 +1,35 @@
-#import "../../../templates/base_report.typ" as base-report
-#import "../../../templates/base_configs.typ" as base
+#import "../../../00-templates/base_verbale.typ" as base-report
+#import "../../../00-templates/base_configs.typ" as base
 
-#let changelog = yaml(sys.inputs.changelog_path)
+#let metadata = yaml(sys.inputs.meta-path)
 
 #base-report.apply-base-verbale(
   date: "2025-10-15",
   scope: base-report.INTERNAL_SCOPE,
-  front-info: (("Presenze", "Mario de Pasquale"),
-               ("", "Alessandro Mazzariol"),
-               ("", "Matteo Mantoan"),
-               ("", "Leonardo Preo"),
-               ("", "Valerio Solito"),
-               ("", "Francesco Marcon")
-  ), 
+  front-info: (
+    (
+      "Presenze",
+      [
+        Francesco Marcon \
+        Valerio Solito \
+        Leonardo Preo \
+        Mario de Pasquale \
+        Alessandro Mazzariol \
+        Matteo Mantoan \
+      ],
+    ),
+  ),
   abstract: "La riunione verte sulle modalità di versionamento e pubblicazione dei verbali, l’organizzazione del lavoro secondo la metodologia Scrum e la rendicontazione delle ore.",
-  changelog: changelog,
+  changelog: metadata.changelog,
 )[
   Con il presente documento si attesta che, in data *15 Ottobre 2025*, si è svolta una riunione interna del gruppo _NoTIP_, tenutasi in modalità virtuale, attraverso il server *Discord* ufficiale del gruppo.\
-  La riunione ha avuto inizio alle ore *21:00* e si è conclusa alle ore *22:20*.\ 
-  Si prevede di: 
+  La riunione ha avuto inizio alle ore *21:00* e si è conclusa alle ore *22:20*.\
+  Si prevede di:
   #list(
     [Scegliere i nome e il logo del gruppo],
     [Discutere sui capitolati di progetto],
     [Definire la tipologia di scrittura dei verbali],
-    [Organizzare generalmente il lavoro del gruppo nel breve termine]
+    [Organizzare generalmente il lavoro del gruppo nel breve termine],
   ) \
 
 ][
@@ -41,7 +47,7 @@
   #list(
     [C7 – Sistema di acquisizione dati da sensori (M31)],
     [C2 – Code Guardian (VarGroup)],
-    [C5 - NEXUM (Eggon)]
+    [C5 - NEXUM (Eggon)],
   )
 
   I membri hanno concordato che la classifica sopra riportata non rappresenta una decisione definitiva, in quanto si ritiene necessario acquisire ulteriori informazioni tecniche e organizzative da parte delle aziende proponenti prima di esprimere una scelta formale.\
@@ -59,7 +65,7 @@
   L’uso di GitHub permetterà al gruppo di monitorare le modifiche, gestire i rami di sviluppo, e mantenere la tracciabilità completa delle decisioni tecniche e documentali.
 
 ][
-  = Esiti e decisioni finali 
+  = Esiti e decisioni finali
   La riunione si è conclusa dopo aver affrontato in modo approfondito tutti i punti all’ordine del giorno.\
   Le decisioni prese hanno consentito di definire gli aspetti fondamentali dell’identità del gruppo (nome, logo, canali di comunicazione), delle modalità operative (linguaggio e strumenti di redazione), e dell’organizzazione interna (metodologia e strumenti di lavoro).\
   È stata inoltre fissata la prossima riunione per il giorno *17 Ottobre 2025*, nella quale verranno discussi i seguenti punti all’ordine del giorno:

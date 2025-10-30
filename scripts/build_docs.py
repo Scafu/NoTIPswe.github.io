@@ -6,7 +6,7 @@ import argparse
 
 import docs_lib
 
-FONT_PATH = "docs/templates/fonts"
+FONT_PATH = "docs/00-templates/assets/fonts"
 
 
 def setup_logging():
@@ -23,11 +23,15 @@ def compile_document(doc: docs_lib.Document, output_dir: str):
     """Compiles a single, validated Document object."""
 
     source_dir = os.path.dirname(doc.source) or "."
-    changelog_path_relative = os.path.relpath(doc.changelog_path, start=source_dir)
-
+    meta_path_relative = os.path.relpath(doc.meta_path, start=source_dir)
     complete_output_path = os.path.join(output_dir, doc.output)
+    output_dir = os.path.dirname(complete_output_path)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
 
-    logging.info(f"Compiling '{doc.title}': {doc.source} -> {complete_output_path}")
+    logging.info(
+        f"Compiling '{doc.metadata["title"]}': {doc.source} -> {complete_output_path}"
+    )
 
     command = [
         "typst",
@@ -35,13 +39,11 @@ def compile_document(doc: docs_lib.Document, output_dir: str):
         doc.source,
         complete_output_path,
         "--input",
-        f"changelog_path={changelog_path_relative}",
-        "--input",
-        f"doc_title={doc.title}",
+        f"meta-path={meta_path_relative}",
         "--root",
         ".",
         "--ignore-system-fonts",
-        f"--font-path={FONT_PATH}"
+        f"--font-path={FONT_PATH}",
     ]
     logging.debug(f"Executing: {' '.join(command)}")
 
@@ -53,11 +55,11 @@ def compile_document(doc: docs_lib.Document, output_dir: str):
         if proc.stderr != "":
             logging.info(f"WARNINGS: {proc.stderr}")
 
-        logging.info(f"SUCCESS: '{doc.title}' compiled.")
+        logging.info(f"SUCCESS: '{doc.metadata["title"]}' compiled.")
         return True
     except subprocess.CalledProcessError as e:
         logging.error(
-            f"FAILURE: Compiling '{doc.title}' failed.\n--- START ---\n{e.stderr.strip()}\n--- END ---"
+            f"FAILURE: Compiling '{doc.metadata["title"]}' failed.\n--- START typst ERROR ---\n{e.stderr.strip()}\n--- END typst ERROR ---"
         )
         return False
     except FileNotFoundError:
@@ -81,15 +83,11 @@ def main():
     logging.debug(f"Ensuring output directory '{output_dir}' exists...")
     os.makedirs(output_dir, exist_ok=True)
 
-    document_model = docs_lib.load_documents_model()
-
+    document_model = docs_lib.discover_documents()
     if not document_model:
-        # This case is handled by the library (warning is logged), but we exit cleanly.
         return
 
-    logging.info(
-        f"All documents validated. Starting compilation of {len(document_model)} documents..."
-    )
+    logging.info(f"Starting compilation of {len(document_model)} documents...")
 
     results = [compile_document(doc, output_dir) for doc in document_model]
 

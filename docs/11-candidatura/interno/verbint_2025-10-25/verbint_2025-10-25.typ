@@ -1,6 +1,6 @@
-#import "../../../templates/base_verbale.typ" as base-verbale
+#import "../../../00-templates/base_verbale.typ" as base-verbale
 
-#let changelog = yaml("verbale_25_10_2025.changelog.yaml")
+#let metadata = yaml(sys.inputs.meta-path)
 
 #base-verbale.apply-base-verbale(
   date: "2025-10-25",
@@ -20,7 +20,7 @@
       ],
     ),
   ),
-  changelog: changelog,
+  changelog: metadata.changelog,
 )[
   Il presente documento attesta che in data 25 Ottobre 2025, si è tenuta una riunione interna del gruppo 12, NoTIP, sulla piattaforma Discord.
   La riunione è iniziata alle ore 10:00 ed è finita alle ore 11:00 con il seguente ordine del giorno:

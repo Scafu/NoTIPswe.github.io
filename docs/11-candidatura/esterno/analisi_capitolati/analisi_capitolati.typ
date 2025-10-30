@@ -1,12 +1,12 @@
-#import "../../templates/base_document.typ" as base-document
+#import "../../../00-templates/base_document.typ" as base-document
 
-#let changelog = yaml(sys.inputs.changelog_path)
+#let metadata = yaml(sys.inputs.meta-path)
 
 #base-document.apply-base-document(
-  title: "Valutazione dei Capitolati",
+  title: metadata.title,
   abstract: "Questo documento contiene un'analisi effettuata da parte del gruppo rispetto ai vari capitolati di progetto proposti dalle aziende nel corso del corso di Ingegneria del Software",
-  changelog: changelog,
-  scope: base-document.EXTERNAL_SCOPE
+  changelog: metadata.changelog,
+  scope: base-document.EXTERNAL_SCOPE,
 )[
   #heading(level: 1, numbering: none)[Introduzione]
   La stesura del presente documento ha lo scopo di illustrare le motivazioni che hanno guidato il gruppo _NoTIP_ nella scelta del capitolato per cui ha presentato la candidatura. \
@@ -44,7 +44,7 @@
   Il *Capitolato C3*: *“Progetto DIPReader”*, proposto da _Sanmarco Informatica_, si prefigge la realizzazione di uno strumento che vertesse sulla consultazione e ricerca di documenti digitali in modalità offline, a partire da pacchetti di conservazione forniti da un sistema centralizzato.\
   == Pro
   Il capitolato è sicuramente interessante per la sua utilità pratica legata alla gestione documentale digitale, alla consultazione dei dati in totale indipendenza dalle condizioni della rete, oltre che all'idea di sviluppare una soluzione multi-piattaforma e autoconsistente. \
-  == Contro 
+  == Contro
   Questo progetto non ha fatto particolarmente presa, fin dall’inizio, all'interno del gruppo.\
   Oltre a ciò, dall’analisi che abbiamo svolto sul documento di capitolato abbiamo individuato alcune sfide significative, come la gestione delle prestazioni su grandi volumi di dati in ambiente locale, oppure il requisito di autoconsistenza dell’applicativo.\
   == Considerazioni
@@ -56,7 +56,7 @@
   Il *Capitolato C4*: *“L’app che Protegge e Trasforma”*, proposto da _Miriade_, ha come obiettivo la realizzazione di un’applicazione mobile che mira alla prevenzione e il supporto delle vittime di violenza di genere, attraverso strumenti intelligenti, sicuri e facilmente accessibili.\
   == Pro
   E’ sicuramente una proposta molto interessante, sia per l’impatto sociale del progetto che per l'integrazione con l’Intelligenza Artificiale. \
-  == Contro 
+  == Contro
   Il gruppo non ha dimostrato alcun interesse nei confronti del capitolato fin dalla presentazione avvenuta in aula, individuando diverse criticità. In primo luogo, la complessità tecnica e normativa legata alla gestione di dati estremamente sensibili la quale richiede una profonda competenza in sicurezza informatica, crittografia e conformità GDPR, ambiti poco consolidati tra gli elementi del gruppo. Inoltre, lo sviluppo di funzionalità avanzate basate sull’Intelligenza Artificiale, come il rilevamento linguistico dei segnali di abuso o la gestione del “panic button” intelligente, è risultato poco chiaro.\
   == Considerazioni
   In conclusione, pur riconoscendo l’elevato valore a livello etico e sociale del progetto, il gruppo _NoTIP_ ha deciso di non proseguire con la candidatura per il capitolato C4.
@@ -81,9 +81,9 @@
 
   = Capitolato C6
   Il *Capitolato C6*: *“Second Brain: Estendere il note-taking con i Large Language Models”*, presentato da _Zucchetti_, si prefigge come obiettivo la realizzazione di un’applicazione che cerchi di integrare le note capacità dei Large Language Models (LLM) ad un editor di testo, basato su MarkDown, con il fine di fornire all’utente un “aiutante intelligente”, che lo supporti nella scrittura, correzione e generazione di contenuti.\
-  == Pro 
+  == Pro
   Abbiamo trovato il capitolato interessante per l’opportunità di sperimentare concretamente l’utilizzo dei modelli linguistici avanzati nel contesto delle applicazioni dedicate al note-taking. \
-  == Contro 
+  == Contro
   Fin dal primo momento, tale progetto, non ha riscosso particolare entusiasmo all’interno del gruppo. _NoTIP_ ha infatti individuato alcuni aspetti che l'hanno portato a confermare il non interesse iniziale nei confronti del progetto. In particolare, il capitolato si sofferma, ponendo una forte enfasi sulla progettazione e calibrazione dei prompt. Questa attività, pur essendo interessante, richiede molta teoria dei concetti ad essi legati, oltre a quella applicativa. Inoltre, la dipendenza dall’integrazione con un servizio LLM esterno, con conseguente ottimizzazione richiesta dalle interazioni tramite API introducono un ulteriore livello di complessità gestionale e di testing. \
   == Considerazioni
   In conclusione, pur riconoscendo lo stampo futuristico che tale progetto incarna, il gruppo _NoTIP_ ha deciso di non proseguire con la candidatura per il capitolato C6.
@@ -99,13 +99,13 @@
   == Contro
   _NoTIP_ è consapevole delle richieste dell’azienda e che molti dei requisiti siano di difficile esecuzione, ma, grazie alla disponibilità dimostrata da parte dell’azienda alla contrattazione e al supporto da parte di professionisti, ritiene di essere in grado di andare a realizzare efficacemente tale capitolato. \
   == Considerazioni
-  _NoTIP_ si candida quindi, all’unanimità all’interno del gruppo, per la realizzazione del progetto proposto e la presentazione della candidatura. 
+  _NoTIP_ si candida quindi, all’unanimità all’interno del gruppo, per la realizzazione del progetto proposto e la presentazione della candidatura.
 
   #pagebreak()
 
-  = Capitolato C8 
+  = Capitolato C8
   Il *Capitolato C8*: *“SmartOrder: Analisi multimodale per la creazione automatica di ordini”*, presentato da _Ergon Informatica_, si propone di andare ad realizzare una piattaforma in grado di andare ad automatizzare la ricezione e l’elaborazione di ordini d’acquisto, pratica ripetitiva e che può andare ad inserire errori umani. Ciò verrebbe fatto trasformando dati non strutturati in ordini strutturati pronti per l’inserimento nei sistemi gestionali aziendali (ERP). \
-  == Pro 
+  == Pro
   Il progetto è sembrato interessante sia per l'idea che per la combinazione di diverse tecnologie all’avanguardia (AI, NLP, ML, OCR). \
   == Contro
   Vari sono i dubbi che si sono formati all’interno del gruppo, in quanto risulta essere il processo descritto risulta essere particolarmente ambizioso. \

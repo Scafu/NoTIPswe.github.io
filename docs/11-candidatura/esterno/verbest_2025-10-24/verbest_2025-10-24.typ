@@ -1,20 +1,25 @@
-#import "../../../templates/base_report.typ" as base-report
+#import "../../../00-templates/base_verbale.typ" as base-report
 
-#let changelog = yaml(sys.inputs.changelog_path)
+#let metadata = yaml(sys.inputs.meta-path)
 
 #base-report.apply-base-verbale(
-  date: "2025-10-24", 
-  scope: base-report.EXTERNAL_SCOPE, 
-  front-info: (("Presenze", "Francesco Marcon"),
-               ("", "Leonardo Preo"),
-               ("", "Matteo Mantoan"),
-               ("", "Mario de Pasquale"), 
-               ("", "Valerio Solito"),
-               ("", "Alessandro Contarini"),
+  date: "2025-10-24",
+  scope: base-report.EXTERNAL_SCOPE,
+  front-info: (
+    (
+      "Presenze",
+      [
+        Francesco Marcon \
+        Leonardo Preo \
+        Matteo Mantoan \
+        Mario de Pasquale \
+        Valerio Solito \
+        Alessandro Contarini \
+      ],
+    ),
   ),
   abstract: "Il seguente documento contiene un resoconto dell'incontro tenutosi con la proponente M31, con obiettivo conoscitivo e di chiarimento circa alcuni dubbi tecnici sorti all'interno del gruppo",
-  changelog: changelog,
-
+  changelog: metadata.changelog,
 )[
   Primo incontro tramite *Microsoft Teams* con la proponente #emph([M31]). Lo scopo dell’incontro da noi richiesto è il chiarire i dubbi che sono sorti nel gruppo durante la presentazione del capitolato e nella successiva fase di rilettura ed analisi eseguita.
 
@@ -28,7 +33,7 @@
     [Gateway e simulatore - capire se sarà possibile, anche solo a livello dimostrativo, interfacciarsi con un gateway fisico reale per strutturare meglio il simulatore.],
     [Sicurezza e penetration testing - chiarire se è prevista una breve introduzione o dimostrazione sulle attività di penetration testing richieste.],
     [Utente (UI) - definire più precisamente quali funzioni e visualizzazioni sono previste per l’utente finale.],
-    [Tecnologie - ottenere maggiore chiarezza sulle tecnologie suggerite e sul loro impiego nelle diverse parti del sistema.]
+    [Tecnologie - ottenere maggiore chiarezza sulle tecnologie suggerite e sul loro impiego nelle diverse parti del sistema.],
   )
 ][
   L’azienda ha inizialmente re-introdotto il progetto sfruttando una serie di domande ricorrenti che le erano state poste anche da altri gruppi in precedenti incontri, sperando in questo modo di andare a chiarire ulteriori dubbi non esplicitati nella mail sopra indicata. Il progetto si prefigge di essere un’iniziativa sperimentale che, essendo tale, non si interfaccia con sensori attualmente esistenti in forma fisica. L’azienda ci ha tenuto ad essere chiara e specifica sul fatto che il progetto rappresenta un concept volto a esplorare la fattibilità di soluzioni di monitoraggio e gestione dati in ambito medicale (es. case di riposo e strutture sanitarie).
@@ -75,13 +80,13 @@
 
   = Epilogo della riunione
   L’incontro tenutosi con l'azienda proponente #emph([M31]) è risultato complessivamente molto positivo da tutti i presenti. I rappresentanti dell’azienda si sono dimostrati molto disponibili e hanno saputo chiarire tutti i dubbi che avevamo, in modo preciso e puntuale.
-  NoTIP ringrazia, nuovamente, #emph([M31]) per la serietà e disponibilità dimostrata durante l’incontro. 
+  NoTIP ringrazia, nuovamente, #emph([M31]) per la serietà e disponibilità dimostrata durante l’incontro.
 
   = Approvazione aziendale
   La presente sezione certifica che il verbale è stato esaminato e approvato dai rappresentanti di #emph([M31]).
   L’avvenuta approvazione è formalmente confermata dalle firme riportate di seguito dei referenti aziendali.
-  
+
   #align(right)[
     #image("./assets/sign.png", width: 40%)
-  ] 
+  ]
 ]
