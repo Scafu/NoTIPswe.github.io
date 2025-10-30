@@ -51,7 +51,7 @@ def discover_documents(scan_root: str = "docs") -> List[Document]:
     """
     Scans the filesystem from `scan_root` and creates the document model based on conventions.
     """
-    logging.info(f"Starting document discovery in '{scan_root}'...")
+    logging.debug(f"Starting document discovery in '{scan_root}'...")
     document_model = []
     scan_root_path = Path(scan_root)
 
@@ -81,18 +81,15 @@ def discover_documents(scan_root: str = "docs") -> List[Document]:
         if len(path_parts) == 1:
             group_dir_name = path_parts[0]
             if not GROUP_DIR_REGEX.match(group_dir_name):
-                logging.warning(
-                    f"Skipping non-conforming group directory: {root_path}")
-                dirs.clear()
+                logging.error(f"Non-conforming group directory: {root_path}")
+                exit(1)
             continue
 
         if len(path_parts) == 2:
             subgroup_name = path_parts[1]
             if subgroup_name not in VALID_SUBGROUPS:
-                logging.warning(
-                    f"Skipping non-conforming subgroup directory: {root_path}"
-                )
-                dirs.clear()
+                logging.error(f"Non-conforming subgroup directory: {root_path}")
+                exit(1)
             continue
 
         if len(path_parts) == 3:
@@ -117,7 +114,7 @@ def discover_documents(scan_root: str = "docs") -> List[Document]:
     if not document_model:
         logging.warning("Discovery finished. No valid documents were found.")
     else:
-        logging.info(
+        logging.debug(
             f"Successfully built a model with {len(document_model)} documents."
         )
 
@@ -175,8 +172,7 @@ def _process_document_dir(
     try:
         relative_parent = doc_dir_path.parent.relative_to("docs")
     except ValueError:
-        logging.error(
-            f"Could not determine relative path for: {doc_dir_path.parent}")
+        logging.error(f"Could not determine relative path for: {doc_dir_path.parent}")
         return None
 
     output_name = f"{doc_name}.pdf"
